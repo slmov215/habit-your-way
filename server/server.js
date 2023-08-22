@@ -3,9 +3,10 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+// const cloudinary = require('./config/cloudinaryConfig');
+// const multer = require('multer');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -20,13 +21,37 @@ const startApolloServer = async () => {
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-
+  // app.use((err, req, res, next) => {
+  //   console.error(err.stack);
+  //   res.status(500).json({ message: 'Something went wrong' });
+  // });
   // Serve up static assets
-  app.use('/images', express.static(path.join(__dirname, '../client/images')));
+  // app.use('/images', express.static(path.join(__dirname, '../client/images')));
 
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
   }));
+
+  // Set up multer middleware
+  // const storage = multer.memoryStorage();
+  // const upload = multer({ storage });
+
+  // app.post('/upload', upload.single('image'), async (req, res) => {
+  //   try {
+  //     const file = req.file;
+  
+  //     if (!file) {
+  //       return res.status(400).json({ message: 'No image uploaded' });
+  //     }
+  
+  //     const result = await cloudinary.uploader.upload(file.buffer);
+  
+  //     res.json(result);
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ message: 'Image upload failed' });
+  //   }
+  // });
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
