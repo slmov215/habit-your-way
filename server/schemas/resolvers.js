@@ -19,6 +19,7 @@ const resolvers = {
         throw new Error('Authentication required');
       }
       // Perform action for authenticated users
+      return 'Sensitive data only visible to authenticated users';
     },
   },
   Mutation: {

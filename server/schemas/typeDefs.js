@@ -36,11 +36,14 @@ const typeDefs = gql`
   type Query {
     activities: [Activity]!
     login(email: String!, password: String!): AuthData!
+    getSensitiveData: String!
   }
 
   type Mutation {
     addActivity(activityInput: ActivityInput!): Activity!
     createUser(username: String!, email: String!, password: String!): User!
+    editUserData(userId: ID!): User!
+    login(email: String!, password: String!): AuthData!
   }
 `;
 
