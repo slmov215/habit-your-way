@@ -55,7 +55,7 @@ const resolvers = {
           username,
           email,
           password: hashedPassword,
-        });
+        }); // look into bcrypt-compare - 
 
         const savedUser = await newUser.save();
         return savedUser;
