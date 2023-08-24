@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UploadWidget from './components/UploadWidget'
 import './App.css'
 
 const httpLink = createHttpLink({
@@ -56,9 +57,11 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
           </Routes>
+          <UploadWidget />
         </div>
       </Router>
     </ApolloProvider>
+
 
   )
 }
