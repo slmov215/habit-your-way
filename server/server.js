@@ -5,8 +5,8 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-// const cloudinary = require('./config/cloudinaryConfig');
-// const multer = require('multer');
+const cloudinary = require('./config/cloudinaryConfig');
+const multer = require('multer');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
