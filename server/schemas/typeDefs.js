@@ -32,13 +32,19 @@ const typeDefs = gql`
     notes: String
   }
 
+  type Image {
+    _id: ID!
+    url: String!
+  }
+
   type Query {
     activities: [Activity]!
+    images: [Image]!
   }
 
   type Mutation {
     addActivity(activityInput: ActivityInput!): Activity!
-    uploadImage(file: Upload!): String!  # Mutation for image upload
+    uploadImage(url: String!): Image!
     createUser(username: String!, email: String!, password: String!): User!
     editUserData(userId: ID!): User!
     login(email: String!, password: String!): AuthData!

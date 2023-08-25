@@ -60,5 +60,13 @@ export const LOGOUT_USER = gql`
   }
 `;
 
+export const UPLOAD_IMAGE = gql`
+  mutation UploadImage($url: String!) {
+    uploadImage(url: $url) {
+      _id
+      url
+    }
+  }
+`;
 
 // add more mutation functions 

@@ -13,9 +13,18 @@ export const GET_ACTIVITIES = gql`
   }
 `;
 
+export const GET_IMAGES = gql`
+  query GetImages {
+    images {
+      _id
+      url
+    }
+  }
+`;
+
 export const UPLOAD_IMAGE = gql`
-  mutation UploadImage($file: Upload!) {
-    uploadImage(file: $file)  # Use the defined mutation for image upload
+  mutation UploadImage($url: String!) {
+    uploadImage(url: $url)  
   }
 `;
 

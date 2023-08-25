@@ -1,8 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server-express');
+const cloudinary = require('cloudinary').v2;
 const Activity = require('../models/Activity');
 const User = require('../models/User');
+const Image = require('../models/Image');
 
 const resolvers = {
   Query: {
@@ -14,6 +16,14 @@ const resolvers = {
         throw new Error('Error fetching activities');
       }
     },
+    images: async () => {
+      try {
+        const images = await Image.find();
+        return images;
+      } catch (error) {
+        throw new Error('Error fetching images');
+      }
+    },
     // getSensitiveData: async (_, __, context) => {
     //   if (!context.user) {
     //     throw new Error('Authentication required');
@@ -23,27 +33,35 @@ const resolvers = {
     // },
   },
   Mutation: {
-    addActivity: async (_, args) => {
-      const { activityInput } = args;
-
+    addActivity: async (_, { activityInput }) => {
       try {
-        const newActivity = new Activity({
-          ...activityInput,
-        });
-
+        const newActivity = new Activity(activityInput);
         const savedActivity = await newActivity.save();
         return savedActivity;
       } catch (error) {
         throw new Error('Error adding activity');
       }
     },
-    uploadImage: async (_, { file }) => {
+    // uploadImage: async (_, { url }) => {
+    //   try {
+    //     const newImage = new Image({ url });
+    //     const savedImage = await newImage.save();
+    //     return savedImage;
+    //   } catch (error) {
+    //     throw new Error('Error uploading image');
+    //   }
+    uploadImage: async (_, { url }) => {
       try {
-        const result = await cloudinary.uploader.upload(file);
-        return result.secure_url;
+        const result = await cloudinary.uploader.upload(url);
+        return {
+          _id: result.public_id,
+          url: result.secure_url,
+        };
       } catch (error) {
+        console.error('Error uploading image:', error);
         throw new Error('Error uploading image');
       }
+    
     },
     createUser: async (_, args) => {
       const { username, email, password } = args;
@@ -112,6 +130,20 @@ const resolvers = {
         throw new Error('Error during login');
       }
     },
+    // uploadImage: async (_, args) => {
+    //   const { url } = args;
+
+    //   try {
+    //     const newImage = new Image({
+    //       url,
+    //     });
+
+    //     const savedImage = await newImage.save();
+    //     return savedImage;
+    //   } catch (error) {
+    //     throw new Error('Error uploading image');
+    //   }
+    // },
   },
 };
 
