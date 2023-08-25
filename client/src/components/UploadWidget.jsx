@@ -57,7 +57,7 @@ const UploadWidget = () => {
   return (
     <>
       <div>
-        Today, it is... {date} at {time}
+        Right now, it's.. {date} at {time}
       </div>
       <button id="upload-widget" onClick={() => widgetRef.current.open()}>
         Upload Image
