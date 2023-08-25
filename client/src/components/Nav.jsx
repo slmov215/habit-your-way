@@ -30,6 +30,14 @@ function Navigation() {
           Sign Up
         </Link>
       </li>
+      <li className="nav-item">
+        <Link
+          to="/CreatePost"
+          className={currentPage === '/CreatePost' ? 'nav-link active' : 'nav-link'}
+        >
+          Create Post
+        </Link>
+      </li>
      
     </ul>
   );
