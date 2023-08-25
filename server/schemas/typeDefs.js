@@ -34,12 +34,11 @@ const typeDefs = gql`
 
   type Query {
     activities: [Activity]!
-    login(email: String!, password: String!): AuthData!
-    getSensitiveData: String!
   }
 
   type Mutation {
     addActivity(activityInput: ActivityInput!): Activity!
+    uploadImage(file: Upload!): String!  # Mutation for image upload
     createUser(username: String!, email: String!, password: String!): User!
     editUserData(userId: ID!): User!
     login(email: String!, password: String!): AuthData!

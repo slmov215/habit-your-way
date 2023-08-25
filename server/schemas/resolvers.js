@@ -14,13 +14,13 @@ const resolvers = {
         throw new Error('Error fetching activities');
       }
     },
-    getSensitiveData: async (_, __, context) => {
-      if (!context.user) {
-        throw new Error('Authentication required');
-      }
-      // Perform action for authenticated users
-      return 'Sensitive data only visible to authenticated users';
-    },
+    // getSensitiveData: async (_, __, context) => {
+    //   if (!context.user) {
+    //     throw new Error('Authentication required');
+    //   }
+    //   // Perform action for authenticated users
+    //   return 'Sensitive data only visible to authenticated users';
+    // },
   },
   Mutation: {
     addActivity: async (_, args) => {
@@ -35,6 +35,14 @@ const resolvers = {
         return savedActivity;
       } catch (error) {
         throw new Error('Error adding activity');
+      }
+    },
+    uploadImage: async (_, { file }) => {
+      try {
+        const result = await cloudinary.uploader.upload(file);
+        return result.secure_url;
+      } catch (error) {
+        throw new Error('Error uploading image');
       }
     },
     createUser: async (_, args) => {
