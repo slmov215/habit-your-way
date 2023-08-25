@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import dayjs from "dayjs";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPLOAD_IMAGE, GET_IMAGES } from "../utils/mutations";
 // import { cloudinaryRef } from "../utils/cloudinaryConfig";
@@ -47,8 +46,6 @@ const UploadWidget = () => {
     }
   };
 
-  const date = dayjs().format("MMMM DD, YYYY");
-  const time = dayjs().format("hh:mma");
 
   if (loading) {
     return <div>Loading...</div>;
@@ -56,9 +53,6 @@ const UploadWidget = () => {
 
   return (
     <>
-      <div>
-        Right now, it's.. {date} at {time}
-      </div>
       <button id="upload-widget" onClick={() => widgetRef.current.open()}>
         Upload Image
       </button>
