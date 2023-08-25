@@ -13,20 +13,20 @@ export const GET_ACTIVITIES = gql`
   }
 `;
 
-export const GET_IMAGES = gql`
-  query GetImages {
-    images {
-      _id
-      url
-    }
-  }
-`;
+// export const GET_IMAGES = gql`
+//   query GetImages {
+//     images {
+//       _id
+//       url
+//     }
+//   }
+// `;
 
-export const UPLOAD_IMAGE = gql`
-  mutation UploadImage($url: String!) {
-    uploadImage(url: $url)  
-  }
-`;
+// export const UPLOAD_IMAGE = gql`
+//   mutation UploadImage($url: String) {
+//     uploadImage(url: $url)  
+//   }
+// `;
 
 export const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
