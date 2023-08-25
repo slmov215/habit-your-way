@@ -13,6 +13,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import CreatePost from './pages/CreatePost';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadWidget from './components/UploadWidget'
@@ -57,7 +58,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
           </Routes>
-          <UploadWidget />
+          <CreatePost />
         </div>
       </Router>
     </ApolloProvider>

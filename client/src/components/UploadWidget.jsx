@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import dayjs from 'dayjs';
 
 const UploadWidget = () => {
     const [images, setImage] = useState([]);
@@ -19,8 +20,18 @@ const UploadWidget = () => {
             }
         })
     },[])
+    const date = dayjs().format('MMMM DD, YYYY');
+    const time = dayjs().format('hh:mma');
     return (
         <>
+            <div>Today, it is... {date} at {time}</div>
+            <form>
+                <label>Title</label>
+                <input type="text" id="post-title"></input>
+                <label>What are you up to?</label>
+                <input type="text" id="post-description"></input>
+                <button type="submit">Create Post</button>
+            </form>
             <button id="upload-widget" onClick={() => widgetRef.current.open()}>Upload Image</button>
             <div className="images-preview-container">
                 {images.map((image) => (
