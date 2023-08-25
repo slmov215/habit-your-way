@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import { useMutation, useQuery } from "@apollo/client";
-import { UPLOAD_IMAGE, GET_IMAGES } from "../utils/queries";
+import { UPLOAD_IMAGE, GET_IMAGES } from "../utils/mutations";
+// import { cloudinaryRef } from "../utils/cloudinaryConfig";
 
 const UploadWidget = () => {
   const [images, setImages] = useState([]);

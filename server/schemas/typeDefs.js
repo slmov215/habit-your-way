@@ -44,7 +44,7 @@ const typeDefs = gql`
 
   type Mutation {
     addActivity(activityInput: ActivityInput!): Activity!
-    uploadImage(url: String!): Image!
+    uploadImage(url: String): Image
     createUser(username: String!, email: String!, password: String!): User!
     editUserData(userId: ID!): User!
     login(email: String!, password: String!): AuthData!

@@ -69,4 +69,13 @@ export const UPLOAD_IMAGE = gql`
   }
 `;
 
+export const GET_IMAGES = gql`
+  query GetImages {
+    images {
+      _id
+      url
+    }
+  }
+`;
+
 // add more mutation functions 
