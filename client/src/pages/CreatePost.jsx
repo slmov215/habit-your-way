@@ -11,6 +11,8 @@ const CreatePost = () => {
     const [ date, setDate ] = useState('');
     const [ savedActivityId, setSavedActivityId ] = useState(getActivityId());
     const [ addActivity ] = useMutation(ADD_ACTIVITY);
+    const todayDate = dayjs().format("MMMM DD, YYYY");
+    const time = dayjs().format("hh:mma");
 
     useEffect(() => {
         return () => saveActivityId(savedActivityId);
@@ -25,9 +27,9 @@ const CreatePost = () => {
                     title: title,
                     description: description,
                     date: date,
+                    // imageUrl: imageUrl,
                 },
             });
-            setSavedActivityId(activityData);
             setTitle('')
             setDescription('')
             setDate('')
@@ -36,14 +38,11 @@ const CreatePost = () => {
         }
     }
 
-    // const date = dayjs().format("MMMM DD, YYYY");
-    // const time = dayjs().format("hh:mma");
-
     return (
         <section>
             <article className='header'>
                 <h1>Post your habit!</h1>
-                <h4> It's currently.. 
+                <h4> It's currently... {todayDate}, {time}
                 </h4>
                 <form
                     onSubmit={handleFormSubmit}>
@@ -51,14 +50,18 @@ const CreatePost = () => {
                     <input type="text"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}></input>
-
+                    
+                    <label>Today's Date</label>
+                    <input type="text"
+                        value={todayDate}
+                        onChange={(event) => setDate(event.target.value)}></input>
                     <label>What are you up to?</label>
                     <textarea type="text"
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}></textarea>
+                <UploadWidget />
                 <button>Post your habit!</button>
                 </form>
-                <UploadWidget />
             </article> 
         </section>
     )
