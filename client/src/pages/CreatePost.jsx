@@ -6,6 +6,8 @@ import UploadWidget from "../components/UploadWidget";
 import { saveActivityId, getActivityId } from "../utils/localStorage";
 
 const CreatePost = () => {
+    const todayDate = dayjs().format("MMMM DD, YYYY");
+    const time = dayjs().format("hh:mma");
     const [ title, setTitle ] = useState('');
     const [ description, setDescription ] = useState('');
     const [ date, setDate ] = useState('');
@@ -27,7 +29,6 @@ const CreatePost = () => {
                     date: date,
                 },
             });
-            setSavedActivityId(activityData);
             setTitle('')
             setDescription('')
             setDate('')
@@ -36,14 +37,11 @@ const CreatePost = () => {
         }
     }
 
-    // const date = dayjs().format("MMMM DD, YYYY");
-    // const time = dayjs().format("hh:mma");
-
     return (
         <section>
             <article className='header'>
                 <h1>Post your habit!</h1>
-                <h4> It's currently.. 
+                <h4> It's currently... {todayDate} {time}
                 </h4>
                 <form
                     onSubmit={handleFormSubmit}>
@@ -51,6 +49,11 @@ const CreatePost = () => {
                     <input type="text"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}></input>
+
+                    <label>Today's Date</label>
+                    <input type="text"
+                        value={todayDate}
+                        onChange={(event) => setDate(event.target.value)}></input>
 
                     <label>What are you up to?</label>
                     <textarea type="text"
