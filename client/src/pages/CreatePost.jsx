@@ -24,9 +24,11 @@ const CreatePost = () => {
         try {
             const { data } = await addActivity({
                 variables: {
-                    title: title,
-                    description: description,
-                    date: date,
+                    activityInput: {
+                        title: title,
+                        description: description,
+                        date: date,
+                      },
                 },
             });
             setTitle('')
