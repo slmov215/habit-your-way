@@ -28,14 +28,14 @@ export const GET_ACTIVITIES = gql`
 //   }
 // `;
 
-export const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      userId
-      token
-      tokenExpiration
-    }
-  }
-`;
+// export const LOGIN_USER = gql`
+//   mutation LoginUser($email: String!, $password: String!) {
+//     login(email: $email, password: $password) {
+//       userId
+//       token
+//       tokenExpiration
+//     }
+//   }
+// `;
 
 // add more queries and mutations 
