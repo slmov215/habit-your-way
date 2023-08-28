@@ -6,24 +6,32 @@ import UploadWidget from '../components/UploadWidget';
 import { saveActivityId, getActivityId } from '../utils/localStorage';
 
 const CreatePost = () => {
-    const [ title, setTitle ] = useState("");
-    const [ description, setDescription ] = useState("");
-    const [ date, setDate ] = useState("");
-    const [ saveActivityId, setSaveActivityId ] = useState(getActivityId());
+    const [ title, setTitle ] = useState('');
+    const [ description, setDescription ] = useState('');
+    const [ date, setDate ] = useState('');
+    const [ savedActivityId, setSavedActivityId ] = useState(getActivityId());
     const [ addActivity ] = useMutation(ADD_ACTIVITY);
 
+    useEffect(() => {
+        return () => saveActivityId(savedActivityId);
+    })
     // creating method to upload the post activity
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const { data } = await addActivity({
+            const { items } = await response.json();
+            const activityData = items.map((activity) => ({
                 variables: {
-                    title,
-                    description,
-                    date,
+                    title: activity.title,
+                    description: activity.description,
+                    date: activity.date,
                 },
-            });
+            }));
+            setSavedActivityId(activityData);
+            setTitle('')
+            setDescription('')
+            setDate('')
         } catch (err) {
             console.error(err);
         }
@@ -41,10 +49,14 @@ const CreatePost = () => {
                 <form
                     onSubmit={handleFormSubmit}>
                     <label>Post Title</label>
-                    <input type="text"></input>
+                    <input type="text"
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}></input>
 
                     <label>What are you up to?</label>
-                    <textarea type="text"></textarea>
+                    <textarea type="text"
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}></textarea>
                 <button>Post your habit!</button>
                 </form>
                 <UploadWidget />
