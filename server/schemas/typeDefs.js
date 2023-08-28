@@ -11,9 +11,9 @@ const typeDefs = gql`
 
   type Activity {
     _id: ID!
-    title: String!
+    title: String
     description: String
-    date: String!
+    date: String
     imageUrl: String
     notes: String
   }
@@ -25,9 +25,9 @@ const typeDefs = gql`
   }
 
   input ActivityInput {
-    title: String!
+    title: String
     description: String
-    date: String!
+    date: String
     imageUrl: String
     notes: String
   }
