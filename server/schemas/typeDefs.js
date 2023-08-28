@@ -38,6 +38,10 @@ const typeDefs = gql`
   }
 
   type Query {
+    users: [User]!
+    user(id: ID!): User
+    userByEmail(email: String!): User
+    searchUsers(username: String!): [User]!
     activities: [Activity]!
     images: [Image]!
   }

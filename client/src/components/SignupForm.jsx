@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER } from '../utils/mutations'; // Import your GraphQL mutation
-
 import Auth from '../utils/auth';
 
 const SignupForm = () => {
@@ -39,7 +38,7 @@ const SignupForm = () => {
       console.log(user);
       Auth.login(token);
     } catch (error) {
-      console.error(error);
+      console.error('Error creating user:', error.message);
       setShowAlert(true);
     }
 
@@ -54,7 +53,7 @@ const SignupForm = () => {
     <>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* show alert if server response is bad */}
+        {/* Show alert if server response is bad */}
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your signup!
         </Alert>
@@ -100,7 +99,8 @@ const SignupForm = () => {
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}
           type='submit'
-          variant='success'>
+          variant='success'
+        >
           Submit
         </Button>
       </Form>
