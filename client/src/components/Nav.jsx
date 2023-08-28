@@ -11,7 +11,7 @@ function Navigation() {
           
           className={currentPage === '/' ? 'nav-link active' : 'nav-link'}
         >
-          Home
+          Activity
         </Link>
       </li>
       <li className="nav-item">
