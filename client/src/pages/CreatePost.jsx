@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { useMutation } from '@apollo/client'
-import { ADD_ACTIVITY } from '../utils/mutations';
-import UploadWidget from '../components/UploadWidget';
-import { saveActivityId, getActivityId } from '../utils/localStorage';
+import { useMutation } from "@apollo/client";
+import { ADD_ACTIVITY } from "../utils/mutations";
+import UploadWidget from "../components/UploadWidget";
+import { saveActivityId, getActivityId } from "../utils/localStorage";
 
 const CreatePost = () => {
     const [ title, setTitle ] = useState('');
@@ -11,15 +11,13 @@ const CreatePost = () => {
     const [ date, setDate ] = useState('');
     const [ savedActivityId, setSavedActivityId ] = useState(getActivityId());
     const [ addActivity ] = useMutation(ADD_ACTIVITY);
-    const todayDate = dayjs().format("MMMM DD, YYYY");
-    const time = dayjs().format("hh:mma");
 
-    useEffect(() => {
-        return () => saveActivityId(savedActivityId);
-    })
-    // creating method to upload the post activity
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
+  useEffect(() => {
+    return () => saveActivityId(savedActivityId);
+  });
+  // creating method to upload the post activity
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
         try {
             const { data } = await addActivity({
@@ -27,9 +25,9 @@ const CreatePost = () => {
                     title: title,
                     description: description,
                     date: date,
-                    // imageUrl: imageUrl,
                 },
             });
+            setSavedActivityId(activityData);
             setTitle('')
             setDescription('')
             setDate('')
@@ -38,11 +36,14 @@ const CreatePost = () => {
         }
     }
 
+    // const date = dayjs().format("MMMM DD, YYYY");
+    // const time = dayjs().format("hh:mma");
+
     return (
         <section>
             <article className='header'>
                 <h1>Post your habit!</h1>
-                <h4> It's currently... {todayDate}, {time}
+                <h4> It's currently.. 
                 </h4>
                 <form
                     onSubmit={handleFormSubmit}>
@@ -50,18 +51,14 @@ const CreatePost = () => {
                     <input type="text"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}></input>
-                    
-                    <label>Today's Date</label>
-                    <input type="text"
-                        value={todayDate}
-                        onChange={(event) => setDate(event.target.value)}></input>
+
                     <label>What are you up to?</label>
                     <textarea type="text"
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}></textarea>
-                <UploadWidget />
                 <button>Post your habit!</button>
                 </form>
+                <UploadWidget />
             </article> 
         </section>
     )
