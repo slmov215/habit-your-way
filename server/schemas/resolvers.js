@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { AuthenticationError } = require('apollo-server-express');
+// const { AuthenticationError } = require('apollo-server-express');
+const { signToken, AuthenticationError } = require('../utils/auth');
 const cloudinary = require('cloudinary').v2;
 const Activity = require('../models/Activity');
 const User = require('../models/User');
@@ -61,31 +62,41 @@ const resolvers = {
         console.error('Error uploading image:', error);
         throw new Error('Error uploading image');
       }
-    
+
     },
-    createUser: async (_, args) => {
-      const { username, email, password } = args;
+    // createUser: async (_, args) => {
+    //   const { username, email, password } = args;
 
+    //   try {
+    //     // Check if a user with the same email already exists
+    //     const existingUser = await User.findOne({ email });
+    //     if (existingUser) {
+    //       throw new Error('User with this email already exists');
+    //     }
+
+    //     // Hash the password
+    //     const hashedPassword = await bcrypt.hash(password, 12);
+
+    //     // Create a new user
+    //     const newUser = new User({
+    //       username,
+    //       email,
+    //       password: hashedPassword,
+    //     }); // look into bcrypt-compare - 
+
+    //     const savedUser = await newUser.save();
+    //     return savedUser;
+    //   } catch (error) {
+    //     throw new Error('Error creating user');
+    //   }
+    // },
+    createUser: async (parent, { username, email, password }) => {
       try {
-        // Check if a user with the same email already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-          throw new Error('User with this email already exists');
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Create a new user
-        const newUser = new User({
-          username,
-          email,
-          password: hashedPassword,
-        }); // look into bcrypt-compare - 
-
-        const savedUser = await newUser.save();
-        return savedUser;
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
       } catch (error) {
+        console.error('Error creating user:', error);
         throw new Error('Error creating user');
       }
     },
