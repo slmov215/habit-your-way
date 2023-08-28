@@ -20,14 +20,13 @@ const CreatePost = () => {
         event.preventDefault();
 
         try {
-            const { items } = await response.json();
-            const activityData = items.map((activity) => ({
+            const { data } = await addActivity({
                 variables: {
-                    title: activity.title,
-                    description: activity.description,
-                    date: activity.date,
+                    title: title,
+                    description: description,
+                    date: date,
                 },
-            }));
+            });
             setSavedActivityId(activityData);
             setTitle('')
             setDescription('')
