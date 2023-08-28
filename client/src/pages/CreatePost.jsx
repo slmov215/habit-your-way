@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import dayjs from "dayjs";
 import { useMutation } from '@apollo/client'
 import { ADD_ACTIVITY } from '../utils/mutations';
-import { UPLOAD_IMAGE } from '../utils/mutations';
 import UploadWidget from '../components/UploadWidget';
 import { saveActivityId, getActivityId } from '../utils/localStorage';
 
-const createPost = () => {
-    const [ titleInput, setTitleInput ] = useState("");
-    const [ descriptionInput, setDescriptionInput ] = useState("");
-    // use state for images 
+const CreatePost = () => {
+    const [ title, setTitle ] = useState("");
+    const [ description, setDescription ] = useState("");
+    const [ date, setDate ] = useState("");
+    const [ saveActivityId, setSaveActivityId ] = useState(getActivityId());
     const [ addActivity ] = useMutation(ADD_ACTIVITY);
-    const [ uploadImage ] = useMutation(UPLOAD_IMAGE);
 
     // creating method to upload the post activity
     const handleFormSubmit = async (event) => {
@@ -23,38 +22,35 @@ const createPost = () => {
                     title,
                     description,
                     date,
-                    imageUrl,
-                    notes,
                 },
             });
-            setTitleInput('');
         } catch (err) {
             console.error(err);
         }
     }
-};
 
+    // const date = dayjs().format("MMMM DD, YYYY");
+    // const time = dayjs().format("hh:mma");
 
-    const date = dayjs().format("MMMM DD, YYYY");
-    const time = dayjs().format("hh:mma");
-
-export default function CreatePost({ handleFormSubmit }) {
     return (
         <section>
             <article className='header'>
                 <h1>Post your habit!</h1>
-                <h4> It's currently.. {date} at {time}
+                <h4> It's currently.. 
                 </h4>
-                <form>
+                <form
+                    onSubmit={handleFormSubmit}>
                     <label>Post Title</label>
                     <input type="text"></input>
 
                     <label>What are you up to?</label>
                     <textarea type="text"></textarea>
+                <button>Post your habit!</button>
                 </form>
                 <UploadWidget />
-                <button>Post your habit!</button>
             </article> 
         </section>
     )
 }
+
+export default CreatePost;
