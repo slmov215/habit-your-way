@@ -36,10 +36,17 @@ const resolvers = {
   Mutation: {
     addActivity: async (_, { activityInput }) => {
       try {
-        const newActivity = new Activity(activityInput);
-        const savedActivity = await newActivity.save();
-        return savedActivity;
+        console.log('Received activityInput:', activityInput);
+        const currentDate = new Date().toISOString();
+      const newActivity = new Activity({
+        ...activityInput,
+        date: currentDate,
+      });
+
+      const savedActivity = await newActivity.save();
+      return savedActivity;
       } catch (error) {
+        console.error('Error adding activity:', error);
         throw new Error('Error adding activity');
       }
     },
@@ -62,34 +69,7 @@ const resolvers = {
         console.error('Error uploading image:', error);
         throw new Error('Error uploading image');
       }
-
     },
-    // createUser: async (_, args) => {
-    //   const { username, email, password } = args;
-
-    //   try {
-    //     // Check if a user with the same email already exists
-    //     const existingUser = await User.findOne({ email });
-    //     if (existingUser) {
-    //       throw new Error('User with this email already exists');
-    //     }
-
-    //     // Hash the password
-    //     const hashedPassword = await bcrypt.hash(password, 12);
-
-    //     // Create a new user
-    //     const newUser = new User({
-    //       username,
-    //       email,
-    //       password: hashedPassword,
-    //     }); // look into bcrypt-compare - 
-
-    //     const savedUser = await newUser.save();
-    //     return savedUser;
-    //   } catch (error) {
-    //     throw new Error('Error creating user');
-    //   }
-    // },
     createUser: async (parent, { username, email, password }) => {
       try {
         const user = await User.create({ username, email, password });
@@ -141,20 +121,6 @@ const resolvers = {
         throw new Error('Error during login');
       }
     },
-    // uploadImage: async (_, args) => {
-    //   const { url } = args;
-
-    //   try {
-    //     const newImage = new Image({
-    //       url,
-    //     });
-
-    //     const savedImage = await newImage.save();
-    //     return savedImage;
-    //   } catch (error) {
-    //     throw new Error('Error uploading image');
-    //   }
-    // },
   },
 };
 
