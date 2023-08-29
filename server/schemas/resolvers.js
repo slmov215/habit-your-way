@@ -98,7 +98,7 @@ const resolvers = {
         if (!user) {
           throw new Error('User not found');
         }
-
+          console.log(user)
         // Compare the provided password with the stored password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -111,7 +111,7 @@ const resolvers = {
           'your-secret-key',
           { expiresIn: '1h' }
         );
-
+        console.log(token)
         return {
           userId: user._id,
           token,
