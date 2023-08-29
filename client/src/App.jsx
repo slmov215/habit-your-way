@@ -17,7 +17,7 @@ import Signup from './pages/Signup';
 import CreatePost from './pages/CreatePost';
 import { onError } from '@apollo/client/link/error'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UploadWidget from './components/UploadWidget'
+import UploadWidget from './components/UploadWidget';
 import './App.css'
 
 const httpLink = createHttpLink({
