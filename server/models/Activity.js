@@ -19,6 +19,10 @@ const activitySchema = new mongoose.Schema({
   notes: {
     type: String,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to the User model
+  },
 });
 
 // Create the Activity model

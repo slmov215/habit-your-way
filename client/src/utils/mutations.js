@@ -43,6 +43,16 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const LOGIN_USER = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      userId
+      token
+      tokenExpiration
+    }
+  }
+`;
+
 export const EDIT_USER = gql`
   mutation EditUser($userId: ID!, $userData: UserInput!) {
     editUserData(userId: $userId, userData: $userData) {
@@ -60,5 +70,22 @@ export const LOGOUT_USER = gql`
   }
 `;
 
+export const UPLOAD_IMAGE = gql`
+  mutation UploadImage($url: String!) {
+    uploadImage(url: $url) {
+      _id
+      url
+    }
+  }
+`;
+
+export const GET_IMAGES = gql`
+  query GetImages {
+    images {
+      _id
+      url
+    }
+  }
+`;
 
 // add more mutation functions 

@@ -1,8 +1,12 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { AuthenticationError } = require('apollo-server-express');
+// const { AuthenticationError } = require('apollo-server-express');
+const { signToken, AuthenticationError } = require('../utils/auth');
+const cloudinary = require('cloudinary').v2;
 const Activity = require('../models/Activity');
 const User = require('../models/User');
+const Image = require('../models/Image');
+
 
 const resolvers = {
   Query: {
@@ -14,6 +18,19 @@ const resolvers = {
         throw new Error('Error fetching activities');
       }
     },
+    getActivitiesByDate: async (_, { date }, context) => {
+      // Fetch activities from the database based on the provided date
+      const activities = await Activity.find({ date: date });
+      return activities;
+    },
+    images: async () => {
+      try {
+        const images = await Image.find();
+        return images;
+      } catch (error) {
+        throw new Error('Error fetching images');
+      }
+    },
     // getSensitiveData: async (_, __, context) => {
     //   if (!context.user) {
     //     throw new Error('Authentication required');
@@ -23,51 +40,51 @@ const resolvers = {
     // },
   },
   Mutation: {
-    addActivity: async (_, args) => {
-      const { activityInput } = args;
-
+    addActivity: async (_, { activityInput }) => {
       try {
+        console.log('Received activityInput:', activityInput);
+        const currentDate = new Date().toISOString();
         const newActivity = new Activity({
           ...activityInput,
+          date: currentDate,
+          // imageUrl: result.secure_url,
+          user: context.user._id,
         });
 
         const savedActivity = await newActivity.save();
         return savedActivity;
       } catch (error) {
+        console.error('Error adding activity:', error);
         throw new Error('Error adding activity');
       }
     },
-    uploadImage: async (_, { file }) => {
+    // uploadImage: async (_, { url }) => {
+    //   try {
+    //     const newImage = new Image({ url });
+    //     const savedImage = await newImage.save();
+    //     return savedImage;
+    //   } catch (error) {
+    //     throw new Error('Error uploading image');
+    //   }
+    uploadImage: async (_, { url }) => {
       try {
-        const result = await cloudinary.uploader.upload(file);
-        return result.secure_url;
+        const result = await cloudinary.uploader.upload(url);
+        return {
+          _id: result.public_id,
+          url: result.secure_url,
+        };
       } catch (error) {
+        console.error('Error uploading image:', error);
         throw new Error('Error uploading image');
       }
     },
-    createUser: async (_, args) => {
-      const { username, email, password } = args;
-
+    createUser: async (parent, { username, email, password }) => {
       try {
-        // Check if a user with the same email already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-          throw new Error('User with this email already exists');
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        // Create a new user
-        const newUser = new User({
-          username,
-          email,
-          password: hashedPassword,
-        }); // look into bcrypt-compare - 
-
-        const savedUser = await newUser.save();
-        return savedUser;
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
       } catch (error) {
+        console.error('Error creating user:', error);
         throw new Error('Error creating user');
       }
     },
@@ -89,7 +106,7 @@ const resolvers = {
         if (!user) {
           throw new Error('User not found');
         }
-
+        console.log(user)
         // Compare the provided password with the stored password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -102,7 +119,7 @@ const resolvers = {
           'your-secret-key',
           { expiresIn: '1h' }
         );
-
+        console.log(token)
         return {
           userId: user._id,
           token,
@@ -112,6 +129,32 @@ const resolvers = {
         throw new Error('Error during login');
       }
     },
+    // editActivity: async (_, { activityId, activityInput }, context) => {
+    //   try {
+    //     // Find the activity by ID
+    //     const activity = await Activity.findById(activityId);
+    //     if (!activity) {
+    //       throw new Error('Activity not found');
+    //     }
+    
+    //     // Check if the logged-in user is the owner of the activity
+    //     if (activity.user.toString() !== context.user._id.toString()) {
+    //       throw new Error('Unauthorized');
+    //     }
+    
+    //     // Update the activity with the new data
+    //     activity.title = activityInput.title;
+    //     activity.description = activityInput.description;
+    //     // Update other fields as needed
+    
+    //     const updatedActivity = await activity.save();
+    //     return updatedActivity;
+    //   } catch (error) {
+    //     console.error('Error editing activity:', error);
+    //     throw new Error('Error editing activity');
+    //   }
+    // }
+    
   },
 };
 
