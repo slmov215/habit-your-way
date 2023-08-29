@@ -43,6 +43,7 @@ const typeDefs = gql`
     userByEmail(email: String!): User
     searchUsers(username: String!): [User]!
     activities: [Activity]!
+    getActivitiesByDate(date: String!): [Activity!]!
     images: [Image]!
   }
 

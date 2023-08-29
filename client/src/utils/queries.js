@@ -13,6 +13,17 @@ export const GET_ACTIVITIES = gql`
   }
 `;
 
+export const GET_ACTIVITIES_BY_DATE = gql`
+  query GetActivitiesByDate($date: String!) {
+    getActivitiesByDate(date: $date) {
+      _id
+      title
+      description
+      date
+    }
+  }
+`;
+
 // export const GET_IMAGES = gql`
 //   query GetImages {
 //     images {

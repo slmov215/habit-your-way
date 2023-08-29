@@ -27,6 +27,14 @@ function Navigation() {
           </li>
           <li className="nav-item">
             <Link
+              to="/MyCalendar"
+              className={currentPage === '/MyCalendar' ? 'nav-link active' : 'nav-link'}
+            >
+              My Calendar
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
               to="/"
               onClick={Auth.logout} // Call the logout function when clicked
               className="nav-link"
