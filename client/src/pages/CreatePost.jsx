@@ -46,7 +46,7 @@ const CreatePost = () => {
   return (
     <section>
       <article className="header">
-        <h1>Post your habit!</h1>
+        <h1>Habit Away!</h1>
         <h4>
           {" "}
           It's currently... {todayDate} {time}
@@ -72,11 +72,12 @@ const CreatePost = () => {
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           ></textarea>
+          <UploadWidget />
           <button>Post your habit!</button>
         </form>
-        <UploadWidget />
       </article>
     </section>
+
   );
 };
 
