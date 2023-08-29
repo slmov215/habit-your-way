@@ -44,13 +44,15 @@ const resolvers = {
       try {
         console.log('Received activityInput:', activityInput);
         const currentDate = new Date().toISOString();
-      const newActivity = new Activity({
-        ...activityInput,
-        date: currentDate,
-      });
+        const newActivity = new Activity({
+          ...activityInput,
+          date: currentDate,
+          // imageUrl: result.secure_url,
+          user: context.user._id,
+        });
 
-      const savedActivity = await newActivity.save();
-      return savedActivity;
+        const savedActivity = await newActivity.save();
+        return savedActivity;
       } catch (error) {
         console.error('Error adding activity:', error);
         throw new Error('Error adding activity');
@@ -104,7 +106,7 @@ const resolvers = {
         if (!user) {
           throw new Error('User not found');
         }
-          console.log(user)
+        console.log(user)
         // Compare the provided password with the stored password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -127,6 +129,32 @@ const resolvers = {
         throw new Error('Error during login');
       }
     },
+    // editActivity: async (_, { activityId, activityInput }, context) => {
+    //   try {
+    //     // Find the activity by ID
+    //     const activity = await Activity.findById(activityId);
+    //     if (!activity) {
+    //       throw new Error('Activity not found');
+    //     }
+    
+    //     // Check if the logged-in user is the owner of the activity
+    //     if (activity.user.toString() !== context.user._id.toString()) {
+    //       throw new Error('Unauthorized');
+    //     }
+    
+    //     // Update the activity with the new data
+    //     activity.title = activityInput.title;
+    //     activity.description = activityInput.description;
+    //     // Update other fields as needed
+    
+    //     const updatedActivity = await activity.save();
+    //     return updatedActivity;
+    //   } catch (error) {
+    //     console.error('Error editing activity:', error);
+    //     throw new Error('Error editing activity');
+    //   }
+    // }
+    
   },
 };
 
