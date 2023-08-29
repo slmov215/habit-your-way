@@ -7,6 +7,7 @@ const Activity = require('../models/Activity');
 const User = require('../models/User');
 const Image = require('../models/Image');
 
+
 const resolvers = {
   Query: {
     activities: async () => {
@@ -16,6 +17,11 @@ const resolvers = {
       } catch (error) {
         throw new Error('Error fetching activities');
       }
+    },
+    getActivitiesByDate: async (_, { date }, context) => {
+      // Fetch activities from the database based on the provided date
+      const activities = await Activity.find({ date: date });
+      return activities;
     },
     images: async () => {
       try {
