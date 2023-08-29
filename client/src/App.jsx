@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { React , useState } from 'react'
+import { Outlet } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -56,26 +57,18 @@ const client = new ApolloClient({
 
 
 function App() {
-
-
   return (
     <ApolloProvider client={client}>
-      <Router>
-
+      {/* <Router> */}
         <div>
+          {/* Assuming your Header and Navigation components are in use */}
+          {/* <Navigation /> */}
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/CreatePost" element={<CreatePost />} />
-          </Routes>
+          <Outlet />
         </div>
-      </Router>
+      {/* </Router> */}
     </ApolloProvider>
-
-
-  )
+  );
 }
 
 export default App
