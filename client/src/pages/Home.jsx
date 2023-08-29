@@ -1,6 +1,9 @@
+import Bar from '../components/Bar.jsx';
+
 export default function Home(){
-    return(
+    return(  
         <div>
+            <Bar />
             Previous activities post
         </div>
     )
