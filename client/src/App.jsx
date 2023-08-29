@@ -61,7 +61,6 @@ function App() {
     <ApolloProvider client={client}>
       {/* <Router> */}
         <div>
-          {/* Assuming your Header and Navigation components are in use */}
           {/* <Navigation /> */}
           <Header />
           <Outlet />

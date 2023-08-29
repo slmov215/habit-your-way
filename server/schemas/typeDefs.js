@@ -25,7 +25,7 @@ const typeDefs = gql`
   }
 
   input ActivityInput {
-    title: String!
+    title: String
     description: String
     date: String
     imageUrl: String
