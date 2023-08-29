@@ -1,12 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import Auth from '../utils/auth';
+import '../assets/Nav.css'
+import webpageName from '../assets/images/habityourway.png'
 
 function Navigation() {
   const currentPage = useLocation().pathname;
   const isLoggedIn = Auth.loggedIn(); // Check if the user is logged in
 
   return (
-    <ul className="nav nav-tabs justify-content-end">
+    <>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+        <img src={webpageName} style={{width:"20rem"}}></img>
+        </a>
+    <ul className="navbar-nav">
       <li className="nav-item">
         <Link
           to="/"
@@ -64,6 +72,9 @@ function Navigation() {
         </>
       )}
     </ul>
+    </div>
+    </nav>
+    </>
   );
 }
 
