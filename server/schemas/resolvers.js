@@ -38,6 +38,21 @@ const resolvers = {
     //   // Perform action for authenticated users
     //   return 'Sensitive data only visible to authenticated users';
     // },
+    // getActivitiesByUser: async (_, args, context) => {
+    //   // Check if the user is authenticated
+    //   // console.log('User data from context:', context.user); 
+    //   if (!context.user) {
+    //     throw new Error('Authentication required');
+    //   }
+  
+    //   try {
+    //     // Fetch activities for the authenticated user
+    //     const activities = await Activity.find({ user: context.user._id });
+    //     return activities;
+    //   } catch (error) {
+    //     throw new Error('Error fetching activities');
+    //   }
+    // },
   },
   Mutation: {
     addActivity: async (_, { activityInput }) => {
@@ -88,15 +103,15 @@ const resolvers = {
         throw new Error('Error creating user');
       }
     },
-    editUserData: async (_, args, context) => {
-      if (!context.user) {
-        throw new Error('Authentication required');
-      }
-      if (context.user._id !== args.userId) {
-        throw new Error('Unauthorized');
-      }
-      // Perform action for authorized user
-    },
+    // editUserData: async (_, args, context) => {
+    //   if (!context.user) {
+    //     throw new Error('Authentication required');
+    //   }
+    //   if (context.user._id !== args.userId) {
+    //     throw new Error('Unauthorized');
+    //   }
+    //   // Perform action for authorized user
+    // },
     login: async (_, args) => {
       const { email, password } = args;
 
@@ -116,7 +131,7 @@ const resolvers = {
         // Generate JWT token
         const token = jwt.sign(
           { userId: user._id, email: user.email },
-          'your-secret-key',
+          'mysecretsshhhhh',
           { expiresIn: '1h' }
         );
         console.log(token)
@@ -129,31 +144,35 @@ const resolvers = {
         throw new Error('Error during login');
       }
     },
-    // editActivity: async (_, { activityId, activityInput }, context) => {
-    //   try {
-    //     // Find the activity by ID
-    //     const activity = await Activity.findById(activityId);
-    //     if (!activity) {
-    //       throw new Error('Activity not found');
-    //     }
-    
-    //     // Check if the logged-in user is the owner of the activity
-    //     if (activity.user.toString() !== context.user._id.toString()) {
-    //       throw new Error('Unauthorized');
-    //     }
-    
-    //     // Update the activity with the new data
-    //     activity.title = activityInput.title;
-    //     activity.description = activityInput.description;
-    //     // Update other fields as needed
-    
-    //     const updatedActivity = await activity.save();
-    //     return updatedActivity;
-    //   } catch (error) {
-    //     console.error('Error editing activity:', error);
-    //     throw new Error('Error editing activity');
-    //   }
-    // }
+    editActivity: async (_, { activityId, newData }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Authentication required');
+      }
+
+      try {
+        // Find the activity by ID
+        const activity = await Activity.findById(activityId);
+        if (!activity) {
+          throw new Error('Activity not found');
+        }
+
+        // Check if the activity belongs to the authenticated user
+        if (activity.user.toString() !== context.user._id) {
+          throw new AuthenticationError('Unauthorized');
+        }
+
+        // Update the activity data
+        activity.title = newData.title;
+        activity.description = newData.description;
+
+        // Save the changes
+        const updatedActivity = await activity.save();
+        return updatedActivity;
+      } catch (error) {
+        console.error('Error editing activity:', error);
+        throw new Error('Error editing activity');
+      }
+    },
     
   },
 };
