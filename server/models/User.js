@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bcrypt = require('bcrypt');
-
+const Activity = require('./Activity');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  activities: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Activity', // Referencing the Activity model
+    },
+  ],
 });
 
 // set up pre-save middleware to create password

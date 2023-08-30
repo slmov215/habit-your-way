@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String
     email: String
     createdAt: String
-    activities: [Activity]!
+    activities: [Activity]
   }
 
   type Activity {

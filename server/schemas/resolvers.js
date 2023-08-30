@@ -96,7 +96,12 @@ const resolvers = {
     createUser: async (parent, { username, email, password }) => {
       try {
         const user = await User.create({ username, email, password });
-        const token = signToken(user);
+        const token = jwt.sign(
+          { userId: user._id, email: user.email },
+          'mysecretsshhhhh',
+          { expiresIn: '1h' }
+        );
+        console.log("your token code:" , token)
         return { token, user };
       } catch (error) {
         console.error('Error creating user:', error);
@@ -174,6 +179,12 @@ const resolvers = {
       }
     },
     
+  },
+  User: {
+    activities: async (parent) => {
+      const user = await User.findById(parent._id).populate('activities');
+      return user.activities;
+    },
   },
 };
 
