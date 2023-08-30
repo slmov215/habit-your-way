@@ -61,13 +61,22 @@ const client = new ApolloClient({
 });
 
 
-
 function App() {
+  const [darkMode, setDarkMode] = useState(false)
   return (
     <ApolloProvider client={client}>
-        <div>
-          <ModeSwitch />
           <Header />
+          <div className={darkMode ? 'dark-mode' : 'light-mode'}>
+          <span style={{color: 'yellow'}}></span>
+          <div className='switch-checkbox'>
+          <label className='switch'>
+            <input type='checkbox'
+              onChange={() => setDarkMode(!darkMode)}
+            />
+            <span className='slider round'></span>
+          </label>
+          </div>
+          <span style={{color: 'grey'}}></span>
           <Outlet />
         </div>
     </ApolloProvider>
