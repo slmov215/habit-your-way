@@ -20,10 +20,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadWidget from './components/UploadWidget';
 import './App.css'
 import ModeSwitch from './components/ModeSwitch';
-import { getTokenFromLocalStorage } from './utils/authUtils'
+import { getTokenFromLocalStorage } from './utils/authUtils';
+import AuthService from './utils/auth';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
+  headers: {
+    Authorization: `Bearer ${AuthService.getToken()}`,
+  },
 });
 
 // Log any GraphQL errors or network error that occurred
