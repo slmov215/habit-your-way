@@ -44,7 +44,7 @@ const UploadWidget = () => {
       const { data } = await uploadImage({ variables: { url: url } });
       console.log("Uploaded image data:", data.uploadImage);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading image:", error.message);
     }
   };
 
