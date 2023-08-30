@@ -18,10 +18,46 @@ const resolvers = {
         throw new Error('Error fetching activities');
       }
     },
+    activity: async (_, { id }) => {
+      try {
+        const activity = await Activity.findById(id);
+        return activity;
+      } catch (error) {
+        throw new Error('Error fetching activity');
+      }
+    },
     getActivitiesByDate: async (_, { date }, context) => {
       // Fetch activities from the database based on the provided date
       const activities = await Activity.find({ date: date });
       return activities;
+    },
+    searchActivities: async (_, { criteria }) => {
+      try {
+        const activities = await Activity.find({ title: { $regex: criteria, $options: 'i' } });
+        return activities;
+      } catch (error) {
+        throw new Error('Error searching activities');
+      }
+    },
+    user: async (_, { id }) => {
+      try {
+        const user = await User.findById(id);
+        return user;
+      } catch (error) {
+        throw new Error('Error fetching user');
+      }
+    },
+    currentUser: async (_, __, context) => {
+      if (!context.user) {
+        return null; // Return null if not authenticated
+      }
+      
+      try {
+        const user = await User.findById(context.user._id);
+        return user;
+      } catch (error) {
+        throw new Error('Error fetching current user');
+      }
     },
     images: async () => {
       try {
@@ -31,13 +67,6 @@ const resolvers = {
         throw new Error('Error fetching images');
       }
     },
-    // getSensitiveData: async (_, __, context) => {
-    //   if (!context.user) {
-    //     throw new Error('Authentication required');
-    //   }
-    //   // Perform action for authenticated users
-    //   return 'Sensitive data only visible to authenticated users';
-    // },
     // getActivitiesByUser: async (_, args, context) => {
     //   // Check if the user is authenticated
     //   // console.log('User data from context:', context.user); 
@@ -73,6 +102,14 @@ const resolvers = {
         throw new Error('Error adding activity');
       }
     },
+    deleteActivity: async (_, { id }) => {
+      try {
+        await Activity.findByIdAndDelete(id);
+        return true;
+      } catch (error) {
+        throw new Error('Error deleting activity');
+      }
+    },
     // uploadImage: async (_, { url }) => {
     //   try {
     //     const newImage = new Image({ url });
@@ -106,6 +143,14 @@ const resolvers = {
       } catch (error) {
         console.error('Error creating user:', error);
         throw new Error('Error creating user');
+      }
+    },
+    editUserData: async (_, { userId, newData }) => {
+      try {
+        const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
+        return updatedUser;
+      } catch (error) {
+        throw new Error('Error editing user data');
       }
     },
     // editUserData: async (_, args, context) => {
@@ -147,6 +192,16 @@ const resolvers = {
         };
       } catch (error) {
         throw new Error('Error during login');
+      }
+    },
+    changePassword: async (_, { userId, newPassword }) => {
+      try {
+        const user = await User.findById(userId);
+        user.password = newPassword;
+        await user.save();
+        return true;
+      } catch (error) {
+        throw new Error('Error changing password');
       }
     },
     editActivity: async (_, { activityId, newData }, context) => {

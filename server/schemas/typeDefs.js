@@ -37,6 +37,12 @@ const typeDefs = gql`
     description: String
   }
 
+  input EditUserInput {
+    username: String
+    email: String
+    password: String
+  }
+
   type Image {
     _id: ID!
     url: String!
@@ -46,8 +52,12 @@ const typeDefs = gql`
     users: [User]
     user(id: ID!): User
     userByEmail(email: String!): User
+    currentUser: User
     searchUsers(username: String!): [User]
     activities: [Activity]
+    activity(id: ID!): Activity
+    searchActivities(criteria: String!): [Activity]
+    deleteActivity(id: ID!): Boolean
     getActivitiesByDate(date: String!): [Activity!]
     getActivitiesByUser: [Activity]
     images: [Image]
@@ -56,10 +66,14 @@ const typeDefs = gql`
   type Mutation {
     addActivity(activityInput: ActivityInput!): Activity
     editActivity(activityId: ID!, newData: EditActivityInput): Activity
+    deleteActivity(id: ID!): Boolean
     uploadImage(url: String): Image
     createUser(username: String!, email: String!, password: String!): User!
-    editUserData(userId: ID!): User!
+    editUserData(userId: ID!, newData: EditUserInput): User
+    changePassword(userId: ID!, newPassword: String!): Boolean
     login(email: String!, password: String!): AuthData!
+    requestPasswordReset(email: String!): Boolean
+    resetPassword(token: String!, newPassword: String!): Boolean
   }
 `;
 
