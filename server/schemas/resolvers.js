@@ -134,7 +134,7 @@ const resolvers = {
           'mysecretsshhhhh',
           { expiresIn: '1h' }
         );
-        console.log(token)
+        console.log("your token code:" , token)
         return {
           userId: user._id,
           token,

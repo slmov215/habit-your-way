@@ -6,6 +6,7 @@ import AuthService from "../utils/auth.js";
 
 export default function Home() {
   const authToken = AuthService.getToken(); // Get the token from local storage or cookie
+  // console.log('Token:', authToken);
   // const authHeader = authToken ? { Authorization: `Bearer ${authToken}` } : {};
 
   const { loading, error, data } = useQuery(GET_ACTIVITIES_BY_USER, {

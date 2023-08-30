@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
@@ -9,6 +10,8 @@ const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+app.use(cors());
 
 // Configure Cloudinary
 // cloudinary.config({
@@ -21,14 +24,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
-  // ({ req }) => {
-    // Retrieve the user from the authentication middleware
-    // const user = authMiddleware(req);
-
-    // Add the Cloudinary instance to the context
-    // return { user, cloudinary };
-  // },
+  context: authMiddleware,
+  // context: ({ req }) => ({
+  //   req, 
+  // }),
 });
 
 // Call the async function to start the server
