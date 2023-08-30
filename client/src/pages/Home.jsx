@@ -1,10 +1,14 @@
 import Bar from '../components/Bar.jsx';
+import "../styles/Home.css";
 
 export default function Home(){
     return(  
-        <div>
+        <div className='home-div'>
             <Bar />
-            Previous activities post
+            <div className='activities'> 
+                <h2>This week you've completed ___ activities!</h2>
+                {/* Completed activities listed here */}
+            </div>
         </div>
     )
 }

@@ -14,7 +14,7 @@ export default function BarGraph() {
                 label: 'User Activities',
                 data: Data.map((data) => data.count),
                 backgroundColor: [
-                    "rgba(75,192,192,1)",
+                    "#b5d3f1",
                 ],
                 borderColor: 'black',
                 borderWidth: 2,
