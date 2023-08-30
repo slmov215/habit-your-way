@@ -18,7 +18,7 @@ module.exports = {
     // }
 
     if (!token) {
-      return req;
+      return { ...req, user: null };
     }
 
     // verify token and get user data out of it
@@ -26,14 +26,18 @@ module.exports = {
       // const { data } = jwt.verify(token, secret, { maxAge: expiration });
       // req.user = data;
       const decodedToken = jwt.verify(token, secret);
-      req.user = decodedToken.data; 
-      console.log('User data attached to request:', decodedToken.data);
+      console.log('Decoded Token:', decodedToken);
+      const user = decodedToken.data; 
+
+      console.log('User data attached to request:', user);
+      return { ...req, user }; 
     } catch (err){
       console.log('Invalid token', err);
+      return { ...req, user: null };
     }
 
     // send to next endpoint
-    return req;
+    // return req;
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
