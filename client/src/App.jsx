@@ -19,6 +19,7 @@ import { onError } from '@apollo/client/link/error'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadWidget from './components/UploadWidget';
 import './App.css'
+import ModeSwitch from './components/ModeSwitch';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -59,13 +60,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      {/* <Router> */}
         <div>
-          {/* <Navigation /> */}
+          <ModeSwitch />
           <Header />
           <Outlet />
         </div>
-      {/* </Router> */}
     </ApolloProvider>
   );
 }
