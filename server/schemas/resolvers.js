@@ -84,7 +84,7 @@ const resolvers = {
     // },
   },
   Mutation: {
-    addActivity: async (_, { activityInput }) => {
+    addActivity: async (_, { activityInput },context) => {
       try {
         console.log('Received activityInput:', activityInput);
         const currentDate = new Date().toISOString();
@@ -121,10 +121,13 @@ const resolvers = {
     uploadImage: async (_, { url }) => {
       try {
         const result = await cloudinary.uploader.upload(url);
-        return {
-          _id: result.public_id,
-          url: result.secure_url,
-        };
+        console.log(result)
+        const image = await Image.create({url:result.secure_url})
+        return image
+        // return {
+        //   _id: result.public_id,
+        //   url: result.secure_url,
+        // };
       } catch (error) {
         console.error('Error uploading image:', error);
         throw new Error('Error uploading image');
