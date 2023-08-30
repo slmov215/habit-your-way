@@ -5,15 +5,12 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-// const cloudinary = require('cloudinary').v2; // Import cloudinary
+// const cloudinary = require('cloudinary').v2;
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
 
+// Configure Cloudinary
 // cloudinary.config({
 //   cloud_name: 'dzssvv0mm',
 //   api_key: '787476141313398',
@@ -21,15 +18,27 @@ const server = new ApolloServer({
 // });
 
 // Create a new instance of an Apollo server with the GraphQL schema
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+  // ({ req }) => {
+    // Retrieve the user from the authentication middleware
+    // const user = authMiddleware(req);
+
+    // Add the Cloudinary instance to the context
+    // return { user, cloudinary };
+  // },
+});
+
+// Call the async function to start the server
 const startApolloServer = async () => {
   await server.start();
 
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  app.use('/graphql', expressMiddleware(server, {
-    context: authMiddleware
-  }));
+  app.use('/graphql', expressMiddleware(server));
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));

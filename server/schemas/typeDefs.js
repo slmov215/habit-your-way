@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Activity {
-    _id: ID!
+    _id: ID
     title: String
     description: String
     date: String
@@ -31,6 +31,11 @@ const typeDefs = gql`
     imageUrl: String
     notes: String
   }
+  
+  input EditActivityInput {
+    title: String
+    description: String
+  }
 
   type Image {
     _id: ID!
@@ -38,17 +43,19 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]!
+    users: [User]
     user(id: ID!): User
     userByEmail(email: String!): User
-    searchUsers(username: String!): [User]!
-    activities: [Activity]!
-    getActivitiesByDate(date: String!): [Activity!]!
-    images: [Image]!
+    searchUsers(username: String!): [User]
+    activities: [Activity]
+    getActivitiesByDate(date: String!): [Activity!]
+    getActivitiesByUser: [Activity]
+    images: [Image]
   }
 
   type Mutation {
-    addActivity(activityInput: ActivityInput!): Activity!
+    addActivity(activityInput: ActivityInput!): Activity
+    editActivity(activityId: ID!, newData: EditActivityInput): Activity
     uploadImage(url: String): Image
     createUser(username: String!, email: String!, password: String!): User!
     editUserData(userId: ID!): User!
