@@ -120,8 +120,9 @@ const resolvers = {
     //   }
     uploadImage: async (_, { url }) => {
       try {
+        console.log('Received URL:', url);
         const result = await cloudinary.uploader.upload(url);
-        console.log(result)
+        console.log('Cloudinary Result:', result);
         const image = await Image.create({url:result.secure_url})
         return image
         // return {
