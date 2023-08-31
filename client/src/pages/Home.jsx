@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Bar from "../components/Bar.jsx";
+import React from "react";
+import Bar from "../components/Bar";
 import { useQuery } from "@apollo/client";
-import { GET_ACTIVITIES_BY_USER } from "../utils/queries";
-import AuthService from "../utils/auth.js"; 
+import { GET_ACTIVITIES_BY_USER } from "../utils/queries"; // Make sure this query is defined in your queries file
+import ActivityList from "../components/ActivityList"; // Import the ActivityList component
+import AuthService from "../utils/auth"; 
 
 export default function Home() {
   const authToken = AuthService.getToken(); // Get the token from local storage or cookie
-  // console.log('Token:', authToken);
-  // const authHeader = authToken ? { Authorization: `Bearer ${authToken}` } : {};
 
   const { loading, error, data } = useQuery(GET_ACTIVITIES_BY_USER, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
-    // headers: authHeader, // Include the token in the headers
   });
 
   if (loading) return <p>Loading...</p>;
@@ -26,44 +24,8 @@ export default function Home() {
       <Bar />
       <div>
         <h2>Previous Activities</h2>
-        {/* <ul>
-          {activities.map((activity) => (
-            <li key={activity._id}>
-              <h3>{activity.title}</h3>
-              <p>{activity.description}</p>
-            </li>
-          ))}
-        </ul> */}
+        <ActivityList activities={activities} /> {/* Pass the activities data to ActivityList */}
       </div>
     </div>
   );
 }
-// needs some adjustment, throw 500 errors
-
-// import React from 'react';
-// import { useQuery } from '@apollo/client';
-// import { GET_ACTIVITIES } from '../utils/queries';
-// import ActivityList from '../components/ActivityList';
-
-// const Home = () => {
-//   const { loading, error, data } = useQuery(GET_ACTIVITIES);
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error fetching activities: {error.message}</div>;
-//   }
-
-//   const activities = data.activities;
-
-//   return (
-//     <div>
-//       <h2>Home</h2>
-//       <ActivityList activities={activities} />
-//     </div>
-//   );
-// };
-
-// export default Home;

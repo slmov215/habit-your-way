@@ -51,7 +51,7 @@ const resolvers = {
       if (!context.user) {
         return null; // Return null if not authenticated
       }
-      
+
       try {
         const user = await User.findById(context.user._id);
         return user;
@@ -73,7 +73,7 @@ const resolvers = {
     //   if (!context.user) {
     //     throw new Error('Authentication required');
     //   }
-  
+
     //   try {
     //     // Fetch activities for the authenticated user
     //     const activities = await Activity.find({ user: context.user._id });
@@ -84,15 +84,16 @@ const resolvers = {
     // },
   },
   Mutation: {
-    addActivity: async (_, { activityInput },context) => {
+    addActivity: async (_, { activityInput }, context) => {
+      console.log('Context user:', context.user);
       try {
         console.log('Received activityInput:', activityInput);
         const currentDate = new Date().toISOString();
         const newActivity = new Activity({
           ...activityInput,
           date: currentDate,
-          // imageUrl: result.secure_url,
-          user: context.user._id,
+          imageUrl: result.secure_url,
+          user: context.user,
         });
 
         const savedActivity = await newActivity.save();
@@ -123,7 +124,7 @@ const resolvers = {
         console.log('Received URL:', url);
         const result = await cloudinary.uploader.upload(url);
         console.log('Cloudinary Result:', result);
-        const image = await Image.create({url:result.secure_url})
+        const image = await Image.create({ url: result.secure_url })
         return image
         // return {
         //   _id: result.public_id,
@@ -142,7 +143,7 @@ const resolvers = {
           'mysecretsshhhhh',
           { expiresIn: '1h' }
         );
-        console.log("your token code:" , token)
+        console.log("your token code:", token)
         return { token, user };
       } catch (error) {
         console.error('Error creating user:', error);
@@ -188,7 +189,7 @@ const resolvers = {
           'mysecretsshhhhh',
           { expiresIn: '1h' }
         );
-        console.log("your token code:" , token)
+        console.log("your token code:", token)
         return {
           userId: user._id,
           token,
@@ -237,7 +238,7 @@ const resolvers = {
         throw new Error('Error editing activity');
       }
     },
-    
+
   },
   User: {
     activities: async (parent) => {
