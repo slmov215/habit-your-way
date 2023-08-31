@@ -66,7 +66,6 @@ function App() {
     <ApolloProvider client={client}>
           <Header />
           <div className={darkMode ? 'dark-mode' : 'light-mode'}>
-          <span style={{color: 'yellow'}}></span>
           <div className='switch-checkbox'>
           <label className='switch'>
             <input type='checkbox'
@@ -75,7 +74,6 @@ function App() {
             <span className='slider round'></span>
           </label>
           </div>
-          <span style={{color: 'grey'}}></span>
           <Outlet />
         </div>
     </ApolloProvider>

@@ -6,6 +6,7 @@
     padding-top: 50px;
 }
 
-.navbar {
-    padding-bottom: 20px;
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: #705d71 !important;
 }
