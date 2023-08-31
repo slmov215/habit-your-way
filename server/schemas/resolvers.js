@@ -92,7 +92,7 @@ const resolvers = {
         const newActivity = new Activity({
           ...activityInput,
           date: currentDate,
-          // imageUrl: result.secure_url,
+          imageUrl: result.secure_url,
           user: context.user,
         });
 
