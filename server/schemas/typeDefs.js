@@ -6,11 +6,11 @@ const typeDefs = gql`
     username: String
     email: String
     createdAt: String
-    activities: [Activity]!
+    activities: [Activity]
   }
 
   type Activity {
-    _id: ID!
+    _id: ID
     title: String
     description: String
     date: String
@@ -31,6 +31,17 @@ const typeDefs = gql`
     imageUrl: String
     notes: String
   }
+  
+  input EditActivityInput {
+    title: String
+    description: String
+  }
+
+  input EditUserInput {
+    username: String
+    email: String
+    password: String
+  }
 
   type Image {
     _id: ID!
@@ -38,21 +49,31 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]!
+    users: [User]
     user(id: ID!): User
     userByEmail(email: String!): User
-    searchUsers(username: String!): [User]!
-    activities: [Activity]!
-    getActivitiesByDate(date: String!): [Activity!]!
-    images: [Image]!
+    currentUser: User
+    searchUsers(username: String!): [User]
+    activities: [Activity]
+    activity(id: ID!): Activity
+    searchActivities(criteria: String!): [Activity]
+    deleteActivity(id: ID!): Boolean
+    getActivitiesByDate(date: String!): [Activity!]
+    getActivitiesByUser: [Activity]
+    images: [Image]
   }
 
   type Mutation {
-    addActivity(activityInput: ActivityInput!): Activity!
+    addActivity(activityInput: ActivityInput!): Activity
+    editActivity(activityId: ID!, newData: EditActivityInput): Activity
+    deleteActivity(id: ID!): Boolean
     uploadImage(url: String): Image
     createUser(username: String!, email: String!, password: String!): User!
-    editUserData(userId: ID!): User!
+    editUserData(userId: ID!, newData: EditUserInput): User
+    changePassword(userId: ID!, newPassword: String!): Boolean
     login(email: String!, password: String!): AuthData!
+    requestPasswordReset(email: String!): Boolean
+    resetPassword(token: String!, newPassword: String!): Boolean
   }
 `;
 

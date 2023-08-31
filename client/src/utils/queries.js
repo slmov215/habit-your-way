@@ -24,6 +24,16 @@ export const GET_ACTIVITIES_BY_DATE = gql`
   }
 `;
 
+export const GET_ACTIVITIES_BY_USER = gql`
+  query GetActivitiesByUser {
+    getActivitiesByUser {
+      _id
+      title
+      description
+    }
+  }
+`;
+
 // export const GET_IMAGES = gql`
 //   query GetImages {
 //     images {
