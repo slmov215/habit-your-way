@@ -11,23 +11,19 @@
   body {
     min-height: 100vh;
     height: 100%;
-  
-  }
-  
-  span {
-    font-size: 40px
+    font-family: 'Courier New', Courier, monospace;
   }
   
   .dark-mode {
-    background-color: #1a1919;
-    color: #999;
+    background-color: #393646;
+    color: #F4EEE0;
     height: 100%;
     transition: background-color 0.25s ease-in-out;
   }
   
   .light-mode {
-    background-color: #fff;
-    color: #333;
+    background-color: #F4EEE0;
+    color: #393646;
     height: 100%;
     transition: background-color 0.25s ease-in-out;
   }
@@ -71,7 +67,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #4F4557;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -83,13 +79,13 @@
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: #fff;
     -webkit-transition: .4s;
     transition: .4s;
   }
   
   input:checked + .slider {
-    background-color: #19a2c1;
+    background-color: #F4EEE0;
   }
   
   input:focus + .slider {
