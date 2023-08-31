@@ -30,10 +30,10 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  static login(token) {
-    localStorage.setItem('id_token', token); // Store the token in local storage
-    window.location.assign('/'); // Redirect to the homepage or another appropriate location
-  }
+  // login(token) {
+  //   localStorage.setItem('id_token', token); // Store the token in local storage
+  //   window.location.assign('/'); // Redirect to the homepage or another appropriate location
+  // }
   
   // Log in the user by saving the token to localStorage
   login(idToken) {

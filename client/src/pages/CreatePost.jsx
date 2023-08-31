@@ -6,6 +6,8 @@ import UploadWidget from "../components/UploadWidget";
 import { saveActivityId, getActivityId } from "../utils/localStorage";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import AuthService from "../utils/auth"; 
+// import { getTokenFromLocalStorage } from "../utils/authUtils";
 
 const CreatePost = () => {
   const todayDate = dayjs().format("MMMM DD, YYYY");
@@ -13,8 +15,18 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date());
+  const token = AuthService.getToken();
+  // const token = getTokenFromLocalStorage();
+  console.log('Token from local storage:', token);
   const [savedActivityId, setSavedActivityId] = useState(getActivityId());
-  const [addActivity] = useMutation(ADD_ACTIVITY);
+  
+  const [addActivity] = useMutation(ADD_ACTIVITY, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
 
   useEffect(() => {
     return () => saveActivityId(savedActivityId);
@@ -29,7 +41,7 @@ const CreatePost = () => {
           activityInput: {
             title: title,
             description: description,
-            date: date, 
+            date: date.toISOString(),
           },
         },
       });
@@ -64,10 +76,7 @@ const CreatePost = () => {
           />
 
           <label>Select Date</label>
-          <Calendar
-            onChange={handleDateChange}
-            value={date}
-          />
+          <Calendar onChange={handleDateChange} value={date} />
 
           <label>What are you up to?</label>
           <textarea
