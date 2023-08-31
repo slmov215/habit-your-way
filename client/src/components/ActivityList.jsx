@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ACTIVITIES_BY_USER } from './path-to-your-queries'; // Import your GraphQL query
-import AuthService from './AuthService'; // Import your authentication service
+import AuthService from '../utils/auth'; // Import your authentication service
 
 function ActivityList() {
   const authToken = AuthService.getToken(); // Get the token from local storage or cookie
