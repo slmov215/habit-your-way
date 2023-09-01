@@ -4,8 +4,9 @@ import dayjs from "dayjs";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ACTIVITIES_BY_DATE } from "../utils/queries";
 import { ADD_ACTIVITY } from "../utils/mutations";
-import AddActivityForm from "./AddActivityForm"; // Import the AddActivityForm component
+import AddActivityForm from "./AddActivityForm";
 import UploadWidget from "../components/UploadWidget";
+import AuthService from "../utils/auth"; 
 
 const MyCalendar = () => {
   const todayDate = dayjs().format("MMMM DD, YYYY");
@@ -28,6 +29,7 @@ const MyCalendar = () => {
 
   const handleAddActivity = async (newActivity) => {
     try {
+      const currentUser = AuthService.getProfile();
       const { data } = await addActivity({
         variables: {
           activityInput: {
@@ -35,7 +37,9 @@ const MyCalendar = () => {
             description: newActivity.description,
             date: selectedDate.toISOString(),
             imageUrl: uploadedImage || '',
+            // user: currentUser.id, 
           },
+        user: currentUser.sub,
         },
       });
       console.log("Mutation data:", data);

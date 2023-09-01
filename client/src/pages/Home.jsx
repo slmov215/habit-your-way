@@ -1,14 +1,14 @@
 import React from "react";
 import Bar from "../components/Bar";
 import { useQuery } from "@apollo/client";
-import { GET_ACTIVITIES_BY_USER } from "../utils/queries"; // Make sure this query is defined in your queries file
-import ActivityList from "../components/ActivityList"; // Import the ActivityList component
+import { GET_ACTIVITIES } from "../utils/queries";
+import ActivityList from "../components/ActivityList"; 
 import AuthService from "../utils/auth"; 
 
 export default function Home() {
   const authToken = AuthService.getToken(); // Get the token from local storage or cookie
 
-  const { loading, error, data } = useQuery(GET_ACTIVITIES_BY_USER, {
+  const { loading, error, data } = useQuery(GET_ACTIVITIES, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },

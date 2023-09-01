@@ -25,14 +25,14 @@ function Navigation() {
       </li>
       {isLoggedIn ? ( // Check if the user is logged in
         <>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link
               to="/CreatePost"
               className={currentPage === '/CreatePost' ? 'nav-link active' : 'nav-link'}
             >
               Create Post
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link
               to="/MyCalendar"
