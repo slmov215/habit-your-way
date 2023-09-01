@@ -24,9 +24,9 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/createPost',
-        element: <CreatePost />
-      }, {
+      //   path: '/createPost',
+      //   element: <CreatePost />
+      // }, {
         path: '/myCalendar',
         element: <MyCalendar />
       }
