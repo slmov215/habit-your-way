@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_ACTIVITY } from '../utils/mutations';
+import '../assets/AddActivity.css'
 
 const AddActivityForm = ({ onAddActivity, selectedDate, selectedImage }) => {
   const [title, setTitle] = useState('');
@@ -38,7 +39,7 @@ console.log( "Received Input:" , data);
       <h3>Add New Activity</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Title:</label>
+          <label className="title">Title:</label>
           <input
             type="text"
             value={title}
