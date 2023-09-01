@@ -14,10 +14,10 @@ export default function BarGraph() {
                 label: 'User Activities',
                 data: Data.map((data) => data.count),
                 backgroundColor: [
-                    "rgba(75,192,192,1)",
+                    "#B9B4C7",
                 ],
                 borderColor: 'black',
-                borderWidth: 2,
+                borderWidth: 1,
             }
         ]
     });
