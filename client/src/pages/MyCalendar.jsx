@@ -7,6 +7,7 @@ import { ADD_ACTIVITY } from "../utils/mutations";
 import AddActivityForm from "./AddActivityForm";
 import UploadWidget from "../components/UploadWidget";
 import AuthService from "../utils/auth"; 
+import '../assets/MyCalendar.css'
 
 const MyCalendar = () => {
   const todayDate = dayjs().format("MMMM DD, YYYY");
