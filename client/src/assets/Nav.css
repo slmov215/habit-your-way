@@ -7,5 +7,8 @@
 }
 
 .navbar {
-    padding-bottom: 20px;
+    background-color: #705d71;
+    font-family: 'Courier New Bold', Courier, monospace;
+    font-size: 17px;
 }
+

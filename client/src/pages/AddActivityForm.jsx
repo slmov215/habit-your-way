@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_ACTIVITY } from '../utils/mutations';
 
-const AddActivityForm = ({ onAddActivity }) => {
+const AddActivityForm = ({ onAddActivity, selectedDate, selectedImage }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  
+
   const [addActivity] = useMutation(ADD_ACTIVITY);
 
   const handleSubmit = async (event) => {
@@ -17,12 +17,12 @@ const AddActivityForm = ({ onAddActivity }) => {
           activityInput: {
             title: title,
             description: description,
-            date: selectedDate, // You need to define selectedDate
+            date: selectedDate,
           },
           image: selectedImage,
         },
       });
-
+console.log( "Received Input:" , data);
       // Call the parent component's function to update the list of activities
       onAddActivity(data.addActivity);
 
@@ -55,7 +55,6 @@ const AddActivityForm = ({ onAddActivity }) => {
           />
         </div>
         <button type="submit">Add Activity</button>
-        
       </form>
     </div>
   );

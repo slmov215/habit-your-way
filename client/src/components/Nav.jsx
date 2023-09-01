@@ -9,10 +9,10 @@ function Navigation() {
 
   return (
     <>
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-        <img src={webpageName} style={{width:"20rem"}}></img>
+        <a className="navbar-brand">
+        <img src={webpageName} style={{width:"22rem"}}></img>
         </a>
     <ul className="navbar-nav">
       <li className="nav-item">

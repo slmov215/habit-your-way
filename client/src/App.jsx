@@ -19,7 +19,6 @@ import { onError } from '@apollo/client/link/error'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadWidget from './components/UploadWidget';
 import './App.css'
-import ModeSwitch from './components/ModeSwitch';
 import { getTokenFromLocalStorage } from './utils/authUtils';
 import AuthService from './utils/auth';
 
@@ -61,13 +60,20 @@ const client = new ApolloClient({
 });
 
 
-
 function App() {
+  const [darkMode, setDarkMode] = useState(false)
   return (
     <ApolloProvider client={client}>
-        <div>
-          <ModeSwitch />
           <Header />
+          <div className={darkMode ? 'dark-mode' : 'light-mode'}>
+          <div className='switch-checkbox'>
+          <label className='switch'>
+            <input type='checkbox'
+              onChange={() => setDarkMode(!darkMode)}
+            />
+            <span className='slider round'></span>
+          </label>
+          </div>
           <Outlet />
         </div>
     </ApolloProvider>
