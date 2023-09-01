@@ -6,7 +6,7 @@ import UploadWidget from "../components/UploadWidget";
 import { saveActivityId, getActivityId } from "../utils/localStorage";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import AuthService from "../utils/auth"; 
+import AuthService from "../utils/auth";
 // import { getTokenFromLocalStorage } from "../utils/authUtils";
 
 const CreatePost = () => {
@@ -14,12 +14,13 @@ const CreatePost = () => {
   const time = dayjs().format("hh:mma");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
   const [date, setDate] = useState(new Date());
   const token = AuthService.getToken();
   // const token = getTokenFromLocalStorage();
-  console.log('Token from local storage:', token);
+  console.log("Token from local storage:", token);
   const [savedActivityId, setSavedActivityId] = useState(getActivityId());
-  
+
   const [addActivity] = useMutation(ADD_ACTIVITY, {
     context: {
       headers: {
@@ -32,6 +33,10 @@ const CreatePost = () => {
     return () => saveActivityId(savedActivityId);
   });
 
+  const handleImagesUpload = (imageUrl) => {
+    setImages((prevImages) => [...prevImages, imageUrl]);
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -42,6 +47,7 @@ const CreatePost = () => {
             title: title,
             description: description,
             date: date.toISOString(),
+            imageUrl: images.map((image) => image.url),
           },
         },
       });
@@ -85,7 +91,7 @@ const CreatePost = () => {
             onChange={(event) => setDescription(event.target.value)}
           />
 
-          <UploadWidget />
+          <UploadWidget onImagesUpload={handleImagesUpload} />
           <button>Post your habit!</button>
         </form>
       </article>
