@@ -6,7 +6,9 @@
     padding-top: 50px;
 }
 
-.bg-body-tertiary {
-    --bs-bg-opacity: 1;
-    background-color: #705d71 !important;
+.navbar {
+    background-color: #705d71;
+    font-family: 'Courier New Bold', Courier, monospace;
+    font-size: 17px;
 }
+
