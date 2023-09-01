@@ -1,13 +1,9 @@
-/* .webpage-name {
-    width: 20rem;
-} */
-
 .navbar-nav {
     padding-top: 50px;
 }
 
 .navbar {
-    background-color: #705d71;
+    background-color: #6f5f70d5;
     font-family: 'Courier New Bold', Courier, monospace;
     font-size: 17px;
 }

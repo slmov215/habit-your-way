@@ -1,0 +1,16 @@
+button {
+    background-color: #B9B4C7;
+    font-family: 'Courier New bold', Courier, monospace;
+    padding: 2px; 
+    margin: 3px;
+}
+
+label {
+    font-family: 'Courier New bold', Courier, monospace;
+    padding-left: 15px;
+    padding-bottom: 20px;
+}
+
+.title {
+    padding-left: 70px;
+}
