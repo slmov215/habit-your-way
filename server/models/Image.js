@@ -5,6 +5,12 @@ const imageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  activities: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Activity', // Referencing the Activity model
+    },
+  ],
 }, {
   timestamps: true,
 });

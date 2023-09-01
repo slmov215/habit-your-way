@@ -34,14 +34,15 @@ export const GET_ACTIVITIES_BY_USER = gql`
   }
 `;
 
-// export const GET_IMAGES = gql`
-//   query GetImages {
-//     images {
-//       _id
-//       url
-//     }
-//   }
-// `;
+export const GET_IMAGES = gql`
+  query GetImages {
+    images {
+      _id
+      url
+      activityId
+    }
+  }
+`;
 
 // export const UPLOAD_IMAGE = gql`
 //   mutation UploadImage($url: String) {
