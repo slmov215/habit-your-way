@@ -84,20 +84,42 @@ const resolvers = {
     // },
   },
   Mutation: {
-    addActivity: async (_, { activityInput }, context) => {
-      console.log('Context user:', context.user);
+    // addActivity: async (_, { activityInput }, context) => {
+    //   console.log('Context user:', context.user);
+    //   try {
+    //     console.log('Received activityInput:', activityInput);
+    //     const currentDate = new Date().toISOString();
+    //     const newActivity = new Activity({
+    //       ...activityInput,
+    //       date: currentDate,
+    //       imageUrl: result.secure_url,
+    //       user: context.user,
+    //     });
+
+    //     const savedActivity = await newActivity.save();
+    //     return savedActivity;
+    //   } catch (error) {
+    //     console.error('Error adding activity:', error);
+    //     throw new Error('Error adding activity');
+    //   }
+    // },
+    addActivity: async (_, { activityInput }) => {
       try {
         console.log('Received activityInput:', activityInput);
-        const currentDate = new Date().toISOString();
-        const newActivity = new Activity({
-          ...activityInput,
-          date: currentDate,
-          imageUrl: result.secure_url,
-          user: context.user,
-        });
-
-        const savedActivity = await newActivity.save();
-        return savedActivity;
+    
+        // Extract imageUrls from activityInput
+        const { imageUrls, ...activityData } = activityInput;
+    
+        // Create the activity without images
+        const newActivity = await Activity.create(activityData);
+    
+        // If imageUrls are provided, associate them with the activity
+        if (imageUrls && imageUrls.length > 0) {
+          // You might want to adjust the following part based on how your schema is designed
+          await Activity.findByIdAndUpdate(newActivity._id, { $set: { imageUrls } });
+        }
+    
+        return newActivity;
       } catch (error) {
         console.error('Error adding activity:', error);
         throw new Error('Error adding activity');
@@ -111,30 +133,32 @@ const resolvers = {
         throw new Error('Error deleting activity');
       }
     },
-    // uploadImage: async (_, { url }) => {
-    //   try {
-    //     const newImage = new Image({ url });
-    //     const savedImage = await newImage.save();
-    //     return savedImage;
-    //   } catch (error) {
-    //     throw new Error('Error uploading image');
-    //   }
     uploadImage: async (_, { url }) => {
       try {
         console.log('Received URL:', url);
-        const result = await cloudinary.uploader.upload(url);
-        console.log('Cloudinary Result:', result);
-        const image = await Image.create({ url: result.secure_url })
-        return image
-        // return {
-        //   _id: result.public_id,
-        //   url: result.secure_url,
-        // };
+        const image = await Image.create({ url });
+        return image;
       } catch (error) {
-        console.error('Error uploading image:', error);
-        throw new Error('Error uploading image');
+        console.error('Error creating image:', error);
+        throw new Error('Error creating image');
       }
     },
+    // uploadImage: async (_, { url }) => {
+    //   try {
+    //     console.log('Received URL:', url);
+    //     const result = await cloudinary.uploader.upload(url);
+    //     console.log('Cloudinary Result:', result);
+    //     const image = await Image.create({ url: result.secure_url })
+    //     return image
+    //     // return {
+    //     //   _id: result.public_id,
+    //     //   url: result.secure_url,
+    //     // };
+    //   } catch (error) {
+    //     console.error('Error uploading image:', error);
+    //     throw new Error('Error uploading image');
+    //   }
+    // },
     createUser: async (parent, { username, email, password }) => {
       try {
         const user = await User.create({ username, email, password });
