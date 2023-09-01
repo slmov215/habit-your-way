@@ -1,8 +1,9 @@
 button {
     background-color: #B9B4C7;
     font-family: 'Courier New bold', Courier, monospace;
-    padding: 2px; 
+    padding: 3px; 
     margin: 3px;
+    margin-left: 170px;
 }
 
 label {
