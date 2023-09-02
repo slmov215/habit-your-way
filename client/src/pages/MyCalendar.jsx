@@ -4,16 +4,18 @@ import dayjs from "dayjs";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ACTIVITIES_BY_DATE } from "../utils/queries";
 import { ADD_ACTIVITY } from "../utils/mutations";
-import AddActivityForm from "./AddActivityForm";
 import UploadWidget from "../components/UploadWidget";
-import AuthService from "../utils/auth"; 
-import '../assets/MyCalendar.css'
+import AuthService from "../utils/auth";
+import "../assets/MyCalendar.css";
 
 const MyCalendar = () => {
   const todayDate = dayjs().format("MMMM DD, YYYY");
   const time = dayjs().format("hh:mma");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   const { loading, data } = useQuery(GET_ACTIVITIES_BY_DATE, {
     variables: { date: selectedDate },
   });
@@ -28,22 +30,26 @@ const MyCalendar = () => {
     setUploadedImage(imageUrl);
   };
 
-  const handleAddActivity = async (newActivity) => {
+  const handleAddActivity = async () => {
     try {
       const currentUser = AuthService.getProfile();
       const { data } = await addActivity({
         variables: {
           activityInput: {
-            title: newActivity.title,
-            description: newActivity.description,
+            title,
+            description,
             date: selectedDate.toISOString(),
-            imageUrl: uploadedImage || '',
-            // user: currentUser.id, 
+            imageUrl: uploadedImage || "",
           },
-        user: currentUser.sub,
+          user: currentUser.sub,
         },
       });
       console.log("Mutation data:", data);
+
+      // Clear the form fields after adding the activity
+      setTitle("");
+      setDescription("");
+      window.location.assign('/');
     } catch (err) {
       console.error("Error adding activity:", err);
       console.log(err.response);
@@ -69,11 +75,29 @@ const MyCalendar = () => {
           <p>No activities found for this date.</p>
         )}
       </ul>
-      <AddActivityForm
-        onAddActivity={handleAddActivity}
-        selectedDate={selectedDate}
-        selectedImage={uploadedImage}
-      />
+      <div>
+        <h3>Add New Activity</h3>
+        <div>
+          <label className="title">Title:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Description:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <button type="button" onClick={handleAddActivity}>
+          Add Activity
+        </button>
+      </div>
       <UploadWidget onImagesUpload={handleImageUpload} />
     </div>
   );

@@ -159,21 +159,21 @@ const resolvers = {
     //     throw new Error('Error uploading image');
     //   }
     // },
-    createUser: async (parent, { username, email, password }) => {
-      try {
-        const user = await User.create({ username, email, password });
-        const token = jwt.sign(
-          { userId: user._id, email: user.email },
-          'mysecretsshhhhh',
-          { expiresIn: '1h' }
-        );
-        console.log("your token code:", token)
-        return { token, user };
-      } catch (error) {
-        console.error('Error creating user:', error);
-        throw new Error('Error creating user');
-      }
-    },
+    // createUser: async (parent, { username, email, password }) => {
+    //   try {
+    //     const user = await User.create({ username, email, password });
+    //     const token = jwt.sign(
+    //       { userId: user._id, email: user.email },
+    //       'mysecretsshhhhh',
+    //       { expiresIn: '1h' }
+    //     );
+    //     console.log("your token code:", token)
+    //     return { token, user };
+    //   } catch (error) {
+    //     console.error('Error creating user:', error);
+    //     throw new Error('Error creating user');
+    //   }
+    // },
     editUserData: async (_, { userId, newData }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
