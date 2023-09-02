@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ACTIVITIES } from '../utils/queries';
-import dayjs from 'dayjs'; // Import dayjs for date and time formatting
+import dayjs from 'dayjs'; 
+import 'dayjs/locale/en'; 
 
 const ActivityList = () => {
   const { loading, error, data } = useQuery(GET_ACTIVITIES);
@@ -11,13 +12,23 @@ const ActivityList = () => {
 
   const activities = data.activities; // Assuming your query returns activities
 
+  // Set the locale to 'en'
+  dayjs.locale('en');
+
   return (
     <div>
-      <h2>Activity List</h2>
       <ul>
         {activities.map(activity => {
+          // Log raw date and time for debugging
+          console.log('Raw Date:', activity.date);
+
+          // Parse the date and time using dayjs
           const formattedDate = dayjs(activity.date).format('MMMM DD, YYYY');
           const formattedTime = dayjs(activity.date).format('hh:mma');
+
+          // Log formatted date and time for debugging
+          console.log('Formatted Date:', formattedDate);
+          console.log('Formatted Time:', formattedTime);
 
           return (
             <li key={activity._id}>

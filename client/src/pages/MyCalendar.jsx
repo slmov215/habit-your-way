@@ -10,7 +10,7 @@ import "../assets/MyCalendar.css";
 
 const MyCalendar = () => {
   const todayDate = dayjs().format("MMMM DD, YYYY");
-  const time = dayjs().format("hh:mma");
+  const time = dayjs().format("hh:mmA");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [uploadedImage, setUploadedImage] = useState(null);
   const [title, setTitle] = useState("");
