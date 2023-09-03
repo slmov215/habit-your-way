@@ -94,7 +94,7 @@ const MyCalendar = () => {
             required
           />
         </div>
-        <button type="button" onClick={handleAddActivity}>
+        <button type="button" className='activity-button' onClick={handleAddActivity}>
           Add Activity
         </button>
       </div>

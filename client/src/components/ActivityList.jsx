@@ -36,7 +36,7 @@ const ActivityList = () => {
               <p>{activity.description}</p>
               <p>Date: {formattedDate}</p>
               <p>Time: {formattedTime}</p>
-              {activity.imageUrl && <img src={activity.imageUrl} alt="Activity" />}
+              {activity.imageUrl && <img src={activity.imageUrl} alt="Activity" style={{ width: '12rem'}}/>}
             </li>
           );
         })}
