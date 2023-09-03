@@ -38,8 +38,8 @@ console.log( "Received Input:" , data);
     <div>
       <h3>Add New Activity</h3>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label className="title">Title:</label>
+        <div className="title">
+          <label>Title:</label>
           <input
             type="text"
             value={title}
@@ -55,7 +55,7 @@ console.log( "Received Input:" , data);
             required
           />
         </div>
-        <button type="submit">Add Activity</button>
+        <button type="submit" className='activity-button'>Add Activity</button>
       </form>
     </div>
   );

@@ -57,11 +57,11 @@ const MyCalendar = () => {
   };
 
   return (
-    <div>
-      <h4>
+    <div className='calendar-page'>
+      <h3>
         {" "}
         It's currently... {todayDate} {time}
-      </h4>
+      </h3>
       <Calendar value={selectedDate} onClickDay={handleDateSelect} />
       <h2>Activities for {selectedDate.toLocaleDateString()}</h2>
       <ul>
