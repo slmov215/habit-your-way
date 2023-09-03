@@ -8,10 +8,20 @@ button {
 
 label {
     font-family: 'Courier New bold', Courier, monospace;
-    padding-left: 15px;
     padding-bottom: 20px;
 }
 
-.title {
-    padding-left: 70px;
+.title { 
+   padding-left: 57px;
+   padding-bottom: 10px;
+}
+
+h3 {
+    display: flex;
+    justify-content: center;
+}
+
+.activity-button {
+    margin-left: 104px;
+    margin-bottom: 10px;
 }
