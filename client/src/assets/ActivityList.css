@@ -1,5 +1,19 @@
-li {
+ul {
     list-style: none;
     margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    position: relative;
+    margin: 20px;
+    background-color: #B9B4C7;
+    
+}
+
+.card-title {
+    padding: 10px;
 }
 

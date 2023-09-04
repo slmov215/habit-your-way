@@ -33,10 +33,12 @@ const ActivityList = () => {
 
           return (
             <li key={activity._id}>
-              <h3>{activity.title}</h3>
+              <div className='card' style={{width: '20rem'}}>
+              <h3 className='card-title'>{activity.title}</h3>
               {activity.imageUrl && <img src={activity.imageUrl} alt="Activity" style={{ width: '12rem'}}/>}
-              <p>{activity.description}</p>
-              <p>Posted at: {formattedDate} at {formattedTime}</p>
+              <p className='card-body'>{activity.description}</p>
+              <p className='card-subtitle card-footer'>Posted at: {formattedDate} at {formattedTime}</p>
+              </div>
             </li>
           );
         })}
