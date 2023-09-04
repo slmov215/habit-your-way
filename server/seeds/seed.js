@@ -1,14 +1,13 @@
-const db = require('./connection');
-const { Activity, User } = require('../models')
-const cleanDB = require('./cleanDB');
-
-const activityData = require('./activityData.json')
-const userData = require('./userData.json')
+const db = require('../config/connection');
+const { Activity, User } = require('../models');
+const clearCollections = require('./cleanDB');
+const activityData = require('./activityData.json');
+const userData = require('./userData.json');
 
 const seedDatabase = async () => {
   try {
-    // Clean the database before seeding (if needed)
-    await cleanDB();
+    // Clean the database collections before seeding
+    await clearCollections();
 
     // Seed User data
     const users = await User.create(userData);

@@ -1,0 +1,24 @@
+[
+    {
+      "title": "Hiking",
+      "description": "A fun hiking adventure in the mountains.",
+      "date": "2023-07-31T12:00:00Z",
+      "imageUrl": "https://www.phillymag.com/wp-content/uploads/sites/3/2023/05/ricketts-glen-waterfall-abhishek-kumar-getty-900x600-1.jpg",
+      "userId": "1"
+    },
+    {
+      "title": "Yoga Class",
+      "description": "Join a relaxing yoga class.",
+      "date": "2023-08-01T15:30:00Z",
+      "imageUrl": "https://campusphilly.org/wp-content/uploads/2023/04/KG_Yoga_Zara-25.jpg",
+      "userId": "2"
+    },
+    {
+      "title": "Cooking Workshop",
+      "description": "Learn to cook your favorite dishes.",
+      "date": "2023-08-02T21:00:00Z",
+      "imageUrl": "https://d1zbhg00cbllnh.cloudfront.net/hudson-table-philadelphia.jpg",
+      "userId": "3"
+    }
+  ]
+  

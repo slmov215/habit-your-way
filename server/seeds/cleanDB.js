@@ -1,16 +1,17 @@
-const models = require('../models');
-const db = require('../config/connection');
+const { User, Activity } = require('../models');
 
-module.exports = async (modelName, collectionName) => {
+const clearCollections = async () => {
   try {
-    let modelExists = await models[modelName].db.db.listCollections({
-      name: collectionName
-    }).toArray()
+    // Clear the users collection
+    await User.deleteMany({});
 
-    if (modelExists.length) {
-      await db.dropCollection(collectionName);
-    }
-  } catch (err) {
-    throw err;
+    // Clear the activities collection
+    await Activity.deleteMany({});
+
+    console.log('Collections cleared successfully');
+  } catch (error) {
+    console.error('Error clearing collections:', error);
   }
-}
+};
+
+module.exports = clearCollections;
