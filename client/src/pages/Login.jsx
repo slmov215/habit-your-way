@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import { Container, Row, Col } from 'react-bootstrap';
+import '../assets/Login.css';
 
 import AuthService from "../utils/auth";
 
@@ -47,8 +48,6 @@ const Login = () => {
     <Row className="justify-content-center">
       <Col md={6}>
         <h2 className="text-center mt-5">Login</h2>
-        <div className="card">
-          <div className="card-body">
             {data ? (
               <p>
                 Success! You may now head{' '}
@@ -56,6 +55,7 @@ const Login = () => {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
+                <p className='input-header'>Email</p>
                 <input
                   className="form-input"
                   placeholder="Your email"
@@ -64,7 +64,8 @@ const Login = () => {
                   value={formState.email}
                   onChange={handleChange}
                 />
-                <input
+                <p className='input-header'>Password</p>
+                <input 
                   className="form-input"
                   placeholder="******"
                   name="password"
@@ -87,8 +88,6 @@ const Login = () => {
                 {error.message}
               </div>
             )}
-          </div>
-        </div>
       </Col>
     </Row>
   </Container>

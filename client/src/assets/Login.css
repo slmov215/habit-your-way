@@ -1,0 +1,33 @@
+.form-input {
+    margin-bottom: 30px;
+    padding: 8px;
+    width: 25rem;
+    margin-right: 100px;
+    border: none;
+    border-radius: 5px;
+}
+
+.input-header {
+    font-family: 'Courier New bold', Courier, monospace;
+}
+
+.btn {
+    background-color: #7DA988;
+    border: none;
+    margin-left: 160px;
+}
+
+.btn:hover {
+    background-color: #7DA988;
+}
+
+@media screen and (max-width: 992px) {
+    .form-input {
+        margin-right: 0px;
+        width: 24rem;
+    }
+
+    .btn {
+        margin-left: 155px;
+    }
+  }
