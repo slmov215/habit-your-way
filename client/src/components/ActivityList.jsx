@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ACTIVITIES } from '../utils/queries';
 import dayjs from 'dayjs'; 
 import 'dayjs/locale/en'; 
+import '../assets/ActivityList.css'
 
 const ActivityList = () => {
   const { loading, error, data } = useQuery(GET_ACTIVITIES);
@@ -33,10 +34,9 @@ const ActivityList = () => {
           return (
             <li key={activity._id}>
               <h3>{activity.title}</h3>
-              <p>{activity.description}</p>
-              <p>Date: {formattedDate}</p>
-              <p>Time: {formattedTime}</p>
               {activity.imageUrl && <img src={activity.imageUrl} alt="Activity" style={{ width: '12rem'}}/>}
+              <p>{activity.description}</p>
+              <p>Posted at: {formattedDate} at {formattedTime}</p>
             </li>
           );
         })}

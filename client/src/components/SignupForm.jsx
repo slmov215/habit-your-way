@@ -3,6 +3,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutations"; // Import your GraphQL mutation
 import Auth from "../utils/auth";
+import '../assets/Signup.css';
 
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({
