@@ -76,7 +76,6 @@ const typeDefs = gql`
     activities: [Activity]
     activity(id: ID!): Activity
     searchActivities(criteria: String!): [Activity]
-    deleteActivity(id: ID!): Boolean
     getActivitiesByDate(date: String!): [Activity!]
     getActivitiesByUser: [Activity]
     images: [Image]

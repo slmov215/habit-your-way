@@ -5,7 +5,7 @@
 
 ![habit-screen-shot](https://github.com/slmov215/habit-your-way/assets/127278005/540df27f-43be-4578-ab33-9db9979881fa)
 
-Habit Your Way is a web-based habit tracker application that helps you stay organized and build positive habits. With this app, you can create, track, and manage your daily habits, set goals, and visualize your progress. Habit Your Way makes it easy to develop and maintain a productive daily routine.
+Habit Your Way is a web-based habit tracker application that helps you stay organized and build positive habits. With this app, you can create and track your daily habits, set goals, and visualize your progress. Habit Your Way makes it easy to develop and maintain a productive daily routine.
 
 ## Table of Contents
 

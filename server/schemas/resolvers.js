@@ -7,6 +7,7 @@ const Activity = require('../models/Activity');
 const User = require('../models/User');
 const Image = require('../models/Image');
 const Goal = require('../models/Goal')
+// const { UserInputError } = require('apollo-server-errors');
 
 
 const resolvers = {
@@ -136,14 +137,6 @@ const resolvers = {
         throw new Error('Error adding activity');
       }
     },
-    deleteActivity: async (_, { id }) => {
-      try {
-        await Activity.findByIdAndDelete(id);
-        return true;
-      } catch (error) {
-        throw new Error('Error deleting activity');
-      }
-    },
     uploadImage: async (_, { url }) => {
       try {
         console.log('Received URL:', url);
@@ -214,15 +207,18 @@ const resolvers = {
       }
     },
     editActivity: async (_, { activityId, newData }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError('Authentication required');
-      }
-
       try {
+        // Check if the user is authenticated
+        if (!context.user) {
+          throw new AuthenticationError('Authentication required');
+        }
+
         // Find the activity by ID
         const activity = await Activity.findById(activityId);
+
+        // Check if the activity exists
         if (!activity) {
-          throw new Error('Activity not found');
+          throw new UserInputError('Activity not found');
         }
 
         // Check if the activity belongs to the authenticated user
@@ -239,7 +235,23 @@ const resolvers = {
         return updatedActivity;
       } catch (error) {
         console.error('Error editing activity:', error);
-        throw new Error('Error editing activity');
+        throw error; // Rethrow the error for Apollo Server to handle
+      }
+    },
+
+    deleteActivity: async (_, { activityId }) => {
+      try {
+        // Find and delete the activity by ID
+        const deletedActivity = await Activity.findByIdAndDelete(activityId);
+
+        if (!deletedActivity) {
+          throw new UserInputError('Activity not found');
+        }
+
+        return true;
+      } catch (error) {
+        console.error('Error deleting activity:', error);
+        throw error; // Rethrow the error for Apollo Server to handle
       }
     },
     createGoal: async (_, { goalInput }) => {
