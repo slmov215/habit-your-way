@@ -8,10 +8,10 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
+    "build-service-worker": "cd client && npm run build-sw",
     "build-pwa": "cd client && npm run build-pwa",
     "serve-pwa": "http-server client/dist",
     "seed": "cd server && npm run seed",
-    "heroku-postbuild": "npm run build-pwa && npm run serve-pwa",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
