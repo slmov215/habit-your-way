@@ -8,6 +8,9 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
+    "build-service-worker": "cd client && npm run build-sw",
+    "build-pwa": "cd client && npm run build-pwa",
+    "serve-pwa": "http-server client/dist",
     "seed": "cd server && npm run seed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,5 +35,8 @@
     "react-big-calendar": "^1.8.2",
     "react-calendar": "^4.6.0",
     "react-chartjs-2": "^5.2.0"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }
