@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ACTIVITIES } from "../utils/queries";
 import ActivityList from "../components/ActivityList"; 
 import AuthService from "../utils/auth"; 
+import '../assets/Home.css';
 
 export default function Home() {
   const authToken = AuthService.getToken(); 

@@ -123,6 +123,11 @@ label {
   padding-bottom: 20px;
 }
 
+h3 {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 992px) {
   h3 {
     padding-left: 20px;
