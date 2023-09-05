@@ -99,4 +99,3 @@ export const CREATE_GOAL = gql`
     }
   }
 `;
-// add more mutation functions 

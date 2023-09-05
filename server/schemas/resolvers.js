@@ -6,6 +6,7 @@ const cloudinary = require('cloudinary').v2;
 const Activity = require('../models/Activity');
 const User = require('../models/User');
 const Image = require('../models/Image');
+const Goal = require('../models/Goal')
 
 
 const resolvers = {

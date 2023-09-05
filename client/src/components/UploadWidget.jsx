@@ -36,7 +36,7 @@ const UploadWidget = ({ onImagesUpload }) => {
     try {
       const { data } = await uploadImage({ variables: { url: url } });
       console.log("Uploaded image data:", data.uploadImage);
-      onImagesUpload(data.uploadImage.url); // Use onImagesUpload here
+      onImagesUpload(data.uploadImage.url); 
     } catch (error) {
       console.error("Error uploading image:", error.message);
     }
