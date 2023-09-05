@@ -1,12 +1,7 @@
-* {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-  }
   #root {
     height: 100%;
   }
-  
+
   html,
   body {
     height: 100%;
@@ -15,12 +10,14 @@
   
   .dark-mode {
     background-color: #393646;
+    height: 100%;
     color: #F4EEE0;
     transition: background-color 0.25s ease-in-out;
   }
   
   .light-mode {
     background-color: #F4EEE0;
+    height: 100%;
     color: #393646;
     transition: background-color 0.25s ease-in-out;
   }
@@ -111,3 +108,5 @@
     display: flex;
     justify-content: end;
   }
+
+ 
