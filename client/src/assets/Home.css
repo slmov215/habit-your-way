@@ -1,0 +1,10 @@
+h2 {
+    padding-left: 25px;
+}
+
+@media screen and (max-width: 992px) {
+    h2 {
+      display: flex;
+      justify-content: center;
+    }
+  }

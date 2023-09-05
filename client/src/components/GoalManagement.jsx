@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_GOALS } from "../utils/queries";
 import { CREATE_GOAL } from "../utils/mutations";
 import AuthService from "../utils/auth";
+import '../assets/Goal.css';
 
 function GoalManagement() {
   const [goalInput, setGoalInput] = useState({
@@ -107,7 +108,7 @@ function GoalManagement() {
             ))}
           </select>
         </label>
-        <button type="submit">Create Goal</button>
+        <button type="submit" className='btn-goal'>Create Goal</button>
       </form>
       {createdGoal && ( // Display the created goal if it exists
         <div>

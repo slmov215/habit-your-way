@@ -1,0 +1,16 @@
+form {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+}
+
+.btn-goal {
+    width: 8rem;
+    padding: 3px;
+}
+
+@media screen and (max-width: 992px) {
+    form {
+      padding-left: 120px;
+    }
+  }
