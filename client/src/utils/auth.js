@@ -47,6 +47,13 @@ class AuthService {
     // Reload the page to reset the application state
     window.location.assign('/');
   }
+  
+  getUserId() {
+    const token = this.getToken();
+    const decoded = decode(token);
+    return decoded ? decoded.userId : null;
+  }
+
 }
 
 export default new AuthService();
