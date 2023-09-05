@@ -6,8 +6,8 @@ import ActivityList from "../components/ActivityList";
 import AuthService from "../utils/auth"; 
 
 export default function Home() {
-  const authToken = AuthService.getToken(); // Get the token from local storage or cookie
-
+  const authToken = AuthService.getToken(); 
+  
   const { loading, error, data } = useQuery(GET_ACTIVITIES, {
     headers: {
       Authorization: `Bearer ${authToken}`,
@@ -22,9 +22,10 @@ export default function Home() {
   return (
     <div>
       <Bar />
+      <br />
       <div>
         <h2>Previous Activities</h2>
-        <ActivityList activities={activities} /> {/* Pass the activities data to ActivityList */}
+        <ActivityList activities={activities} /> 
       </div>
     </div>
   );

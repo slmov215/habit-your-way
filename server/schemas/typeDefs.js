@@ -50,6 +50,23 @@ const typeDefs = gql`
     url: String!
   }
 
+  type Goal {
+    _id: ID!
+    user: User!
+    activity: Activity!
+    name: String!
+    description: String
+    dueDate: Date!
+    completed: Boolean!
+  }
+  
+  input GoalInput {
+    activityId: ID!
+    name: String!
+    description: String
+    dueDate: Date!
+  }
+
   type Query {
     users: [User]
     user(id: ID!): User
@@ -63,6 +80,7 @@ const typeDefs = gql`
     getActivitiesByDate(date: String!): [Activity!]
     getActivitiesByUser: [Activity]
     images: [Image]
+    goals(userId: ID!): [Goal!]!
   }
 
   type Mutation {
@@ -76,7 +94,11 @@ const typeDefs = gql`
     login(email: String!, password: String!): AuthData!
     requestPasswordReset(email: String!): Boolean
     resetPassword(token: String!, newPassword: String!): Boolean
+    createGoal(goalInput: GoalInput!): Goal!
+    updateGoal(goalId: ID!, goalInput: GoalInput!): Goal!
+    deleteGoal(goalId: ID!): Goal!
   }
 `;
+
 
 module.exports = typeDefs;

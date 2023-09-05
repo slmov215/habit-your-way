@@ -5,7 +5,7 @@ import App from './App.jsx';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-// import CreatePost from './pages/CreatePost.jsx';
+import GoalManagement from './components/GoalManagement.jsx';
 import MyCalendar from './pages/MyCalendar.jsx';
 import './index.css';
 
@@ -24,9 +24,9 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-      //   path: '/createPost',
-      //   element: <CreatePost />
-      // }, {
+        path: '/goal',
+        element: <GoalManagement />
+      }, {
         path: '/myCalendar',
         element: <MyCalendar />
       }
@@ -42,8 +42,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 );
 
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     {router}
-//   </React.StrictMode>
-// );

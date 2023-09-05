@@ -88,4 +88,15 @@ export const GET_IMAGES = gql`
   }
 `;
 
+export const CREATE_GOAL = gql`
+  mutation CreateGoal($goalInput: GoalInput!) {
+    createGoal(goalInput: $goalInput) {
+      _id
+      name
+      description
+      dueDate
+      completed
+    }
+  }
+`;
 // add more mutation functions 

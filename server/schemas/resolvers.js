@@ -82,27 +82,27 @@ const resolvers = {
     //     throw new Error('Error fetching activities');
     //   }
     // },
+    goals: async (_, { userId }) => {
+      // Fetch goals for a specific user
+      return Goal.find({ user: userId });
+    },
   },
   Mutation: {
-    // addActivity: async (_, { activityInput }, context) => {
-    //   console.log('Context user:', context.user);
-    //   try {
-    //     console.log('Received activityInput:', activityInput);
-    //     const currentDate = new Date().toISOString();
-    //     const newActivity = new Activity({
-    //       ...activityInput,
-    //       date: currentDate,
-    //       imageUrl: result.secure_url,
-    //       user: context.user,
-    //     });
-
-    //     const savedActivity = await newActivity.save();
-    //     return savedActivity;
-    //   } catch (error) {
-    //     console.error('Error adding activity:', error);
-    //     throw new Error('Error adding activity');
-    //   }
-    // },
+    createUser: async (parent, { username, email, password }) => {
+      try {
+        const user = await User.create({ username, email, password });
+        const token = jwt.sign(
+          { userId: user._id, email: user.email },
+          'mysecretsshhhhh',
+          { expiresIn: '1h' }
+        );
+        console.log("your token code:", token)
+        return { token, user };
+      } catch (error) {
+        console.error('Error creating user:', error);
+        throw new Error('Error creating user');
+      }
+    },
     addActivity: async (_, { activityInput }) => {
       try {
         console.log('Received activityInput:', activityInput);
@@ -143,37 +143,6 @@ const resolvers = {
         throw new Error('Error creating image');
       }
     },
-    // uploadImage: async (_, { url }) => {
-    //   try {
-    //     console.log('Received URL:', url);
-    //     const result = await cloudinary.uploader.upload(url);
-    //     console.log('Cloudinary Result:', result);
-    //     const image = await Image.create({ url: result.secure_url })
-    //     return image
-    //     // return {
-    //     //   _id: result.public_id,
-    //     //   url: result.secure_url,
-    //     // };
-    //   } catch (error) {
-    //     console.error('Error uploading image:', error);
-    //     throw new Error('Error uploading image');
-    //   }
-    // },
-    // createUser: async (parent, { username, email, password }) => {
-    //   try {
-    //     const user = await User.create({ username, email, password });
-    //     const token = jwt.sign(
-    //       { userId: user._id, email: user.email },
-    //       'mysecretsshhhhh',
-    //       { expiresIn: '1h' }
-    //     );
-    //     console.log("your token code:", token)
-    //     return { token, user };
-    //   } catch (error) {
-    //     console.error('Error creating user:', error);
-    //     throw new Error('Error creating user');
-    //   }
-    // },
     editUserData: async (_, { userId, newData }) => {
       try {
         const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
@@ -262,7 +231,20 @@ const resolvers = {
         throw new Error('Error editing activity');
       }
     },
-
+    createGoal: async (_, { goalInput }) => {
+      // Create a new goal
+      const goal = new Goal(goalInput);
+      return goal.save();
+    },
+    updateGoal: async (_, { goalId, goalInput }) => {
+      // Update an existing goal
+      return Goal.findByIdAndUpdate(goalId, goalInput, { new: true });
+    },
+    deleteGoal: async (_, { goalId }) => {
+      // Delete a goal and return the deleted goal
+      return Goal.findByIdAndRemove(goalId);
+    },
+  
   },
   User: {
     activities: async (parent) => {

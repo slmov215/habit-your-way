@@ -44,6 +44,18 @@ export const GET_IMAGES = gql`
   }
 `;
 
+export const GET_GOALS = gql`
+  query GetGoals($userId: ID!) {
+    goals(userId: $userId) {
+      _id
+      name
+      description
+      dueDate
+      completed
+    }
+  }
+`;
+
 // export const UPLOAD_IMAGE = gql`
 //   mutation UploadImage($url: String) {
 //     uploadImage(url: $url)  
@@ -60,4 +72,4 @@ export const GET_IMAGES = gql`
 //   }
 // `;
 
-// add more queries and mutations 
+
