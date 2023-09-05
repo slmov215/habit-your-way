@@ -1,8 +1,8 @@
 .form-input {
     margin-bottom: 30px;
     padding: 8px;
+    margin-right: 350px;
     width: 25rem;
-    margin-right: 100px;
     border: none;
     border-radius: 5px;
 }
@@ -15,6 +15,7 @@
     background-color: #7DA988;
     border: none;
     margin-left: 160px;
+    width: 5rem;
 }
 
 .btn:hover {
@@ -23,8 +24,8 @@
 
 @media screen and (max-width: 992px) {
     .form-input {
-        margin-right: 0px;
-        width: 24rem;
+        margin-right: 100px;
+        width: 22rem;
     }
 
     .btn {
