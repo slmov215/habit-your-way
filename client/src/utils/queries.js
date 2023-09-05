@@ -53,23 +53,9 @@ export const GET_GOALS = gql`
       dueDate
       completed
     }
+    activities {
+      _id
+      title
+    }
   }
 `;
-
-// export const UPLOAD_IMAGE = gql`
-//   mutation UploadImage($url: String) {
-//     uploadImage(url: $url)  
-//   }
-// `;
-
-// export const LOGIN_USER = gql`
-//   mutation LoginUser($email: String!, $password: String!) {
-//     login(email: $email, password: $password) {
-//       userId
-//       token
-//       tokenExpiration
-//     }
-//   }
-// `;
-
-

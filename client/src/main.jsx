@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/goal',
+        path: '/GoalManagement',
         element: <GoalManagement />
       }, {
         path: '/myCalendar',

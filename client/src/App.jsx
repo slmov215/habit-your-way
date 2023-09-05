@@ -8,16 +8,9 @@ import {
   from,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-// import Navigation from './components/Nav';
 import Header from './components/Header';
-// import Home from './pages/Home';
-// import Login from './pages/Login';
-// import Signup from './pages/Signup';
-// import CreatePost from './pages/CreatePost';
 import { onError } from '@apollo/client/link/error'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UploadWidget from './components/UploadWidget';
 import './App.css'
 import { getTokenFromLocalStorage } from './utils/authUtils';
 import AuthService from './utils/auth';

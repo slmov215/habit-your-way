@@ -13,7 +13,6 @@ const ActivityList = () => {
 
   const activities = data.activities;
 
-  // Set the locale to 'en'
   dayjs.locale('en');
 
   return (

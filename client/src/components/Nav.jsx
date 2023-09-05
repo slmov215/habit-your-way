@@ -30,7 +30,7 @@ function Navigation() {
               to="/GoalManagement"
               className={currentPage === '/GoalManagement' ? 'nav-link active' : 'nav-link'}
             >
-              Goal
+              Goal Management
             </Link>
           </li>
           <li className="nav-item">

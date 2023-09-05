@@ -1,50 +1,56 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { GET_GOALS } from '../utils/queries';
-import { CREATE_GOAL } from '../utils/mutations';
-import AuthService from '../utils/auth';
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_GOALS } from "../utils/queries";
+import { CREATE_GOAL } from "../utils/mutations";
+import AuthService from "../utils/auth";
 
 function GoalManagement() {
-  // Define state variables for form inputs
   const [goalInput, setGoalInput] = useState({
-    name: '',
-    description: '',
-    dueDate: '',
-    activityId: '', // Initialize activityId as an empty string
+    name: "",
+    description: "",
+    dueDate: "",
+    activityId: "",
   });
 
-  // Fetch user's goals
+  const [selectedActivity, setSelectedActivity] = useState("");
+  const [createdGoal, setCreatedGoal] = useState(null); 
+
   const { loading, error, data, refetch } = useQuery(GET_GOALS, {
     variables: { userId: AuthService.getUserId() },
   });
 
-  // Create a new goal
   const [createGoal] = useMutation(CREATE_GOAL);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setGoalInput({ ...goalInput, [name]: value });
+    if (name === "activityId") {
+      setSelectedActivity(value);
+    } else {
+      setGoalInput({ ...goalInput, [name]: value });
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const createNewGoal = async () => {
     try {
-      await createGoal({
+      const { data: { createGoal: newGoal } } = await createGoal({
         variables: {
-          goalInput: goalInput, // Pass the entire goalInput object
+          goalInput: {
+            ...goalInput,
+            activityId: selectedActivity,
+          },
         },
       });
-      // Clear form inputs
+      setCreatedGoal(newGoal);
       setGoalInput({
-        name: '',
-        description: '',
-        dueDate: '',
-        activityId: '', // Reset activityId to an empty string
+        name: "",
+        description: "",
+        dueDate: "",
+        activityId: "",
       });
-      // Refetch goals or update the cache as needed
+      setSelectedActivity("");
       refetch();
     } catch (error) {
-      console.error('Error creating goal:', error);
+      console.error("Error creating goal:", error);
     }
   };
 
@@ -54,16 +60,7 @@ function GoalManagement() {
   return (
     <div>
       <h2>Goal Management</h2>
-      {/* Display goals from the data variable */}
-      {data.goals.map((goal) => (
-        <div key={goal._id}>
-          <p>{goal.name}</p>
-          {/* Display other goal details */}
-        </div>
-      ))}
-      {/* Create form for adding goals */}
-      <form onSubmit={handleSubmit}>
-        {/* Add form inputs for goal creation */}
+      <form onSubmit={createNewGoal}>
         <label>
           Goal Name:
           <input
@@ -92,19 +89,18 @@ function GoalManagement() {
             required
           />
         </label>
-        {/* Add a select input for choosing the activity */}
         <label>
           Activity:
           <select
             name="activityId"
-            value={goalInput.activityId}
+            value={selectedActivity} // Use selectedActivity as the value
             onChange={handleInputChange}
             required
           >
             <option value="" disabled>
               Select an activity
             </option>
-            {data.activities.map((activity) => (
+            {data.activities && data.activities.map((activity) => (
               <option key={activity._id} value={activity._id}>
                 {activity.title}
               </option>
@@ -113,6 +109,21 @@ function GoalManagement() {
         </label>
         <button type="submit">Create Goal</button>
       </form>
+      {createdGoal && ( // Display the created goal if it exists
+        <div>
+          <h3>Created Goal:</h3>
+          <p>Name: {createdGoal.name}</p>
+          <p>Description: {createdGoal.description}</p>
+          <p>Due Date: {createdGoal.dueDate}</p>
+          <p>Activity: {createdGoal.activityId}</p>
+        </div>
+      )}
+      {data.goals.map((goal) => (
+        <div key={goal._id}>
+          <p>{goal.name}</p>
+          {/* Display other goal details */}
+        </div>
+      ))}
     </div>
   );
 }
