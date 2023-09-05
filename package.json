@@ -12,6 +12,7 @@
     "build-pwa": "cd client && npm run build-pwa",
     "serve-pwa": "http-server client/dist",
     "seed": "cd server && npm run seed",
+    "heroku-postbuild": "npm run build-pwa && npm run serve-pwa",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
