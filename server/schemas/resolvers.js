@@ -28,8 +28,18 @@ const resolvers = {
       }
     },
     getActivitiesByDate: async (_, { date }, context) => {
-      // Fetch activities from the database based on the provided date
-      const activities = await Activity.find({ date: date });
+      console.log("Resolver Date Input:", date);
+
+      const startDate = new Date(date);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(date);
+      endDate.setHours(23, 59, 59, 999);
+      
+      // Fetch activities within the date range
+      const activities = await Activity.find({
+        date: { $gte: startDate, $lte: endDate },
+      });
+      console.log("Activities Retrieved:", activities);
       return activities;
     },
     searchActivities: async (_, { criteria }) => {
@@ -107,19 +117,19 @@ const resolvers = {
     addActivity: async (_, { activityInput }) => {
       try {
         console.log('Received activityInput:', activityInput);
-    
+
         // Extract imageUrls from activityInput
         const { imageUrls, ...activityData } = activityInput;
-    
+
         // Create the activity without images
         const newActivity = await Activity.create(activityData);
-    
+
         // If imageUrls are provided, associate them with the activity
         if (imageUrls && imageUrls.length > 0) {
           // You might want to adjust the following part based on how your schema is designed
           await Activity.findByIdAndUpdate(newActivity._id, { $set: { imageUrls } });
         }
-    
+
         return newActivity;
       } catch (error) {
         console.error('Error adding activity:', error);
@@ -233,10 +243,27 @@ const resolvers = {
       }
     },
     createGoal: async (_, { goalInput }) => {
-      // Create a new goal
-      const goal = new Goal(goalInput);
-      return goal.save();
+      try {
+        // Check if the required fields (activity and user) are provided in goalInput
+        if (!goalInput.activity || !goalInput.user) {
+          throw new Error("Both activity and user fields are required.");
+        }
+    
+        // Create a new goal instance with the provided input
+        const newGoal = new Goal(goalInput);
+    
+        // Save the new goal to the database
+        await newGoal.save();
+    
+        // Return the saved goal
+        return newGoal;
+      } catch (error) {
+        // Handle and log the error
+        console.error("Error saving goal:", error);
+        throw error;
+      }
     },
+    
     updateGoal: async (_, { goalId, goalInput }) => {
       // Update an existing goal
       return Goal.findByIdAndUpdate(goalId, goalInput, { new: true });
@@ -245,7 +272,7 @@ const resolvers = {
       // Delete a goal and return the deleted goal
       return Goal.findByIdAndRemove(goalId);
     },
-  
+
   },
   User: {
     activities: async (parent) => {

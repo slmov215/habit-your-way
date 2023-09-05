@@ -17,7 +17,7 @@ const MyCalendar = () => {
   const [description, setDescription] = useState("");
 
   const { loading, data } = useQuery(GET_ACTIVITIES_BY_DATE, {
-    variables: { date: selectedDate },
+    variables: { date: dayjs(selectedDate).format("YYYY-MM-DD") },
   });
 
   const [addActivity] = useMutation(ADD_ACTIVITY);
@@ -49,7 +49,7 @@ const MyCalendar = () => {
       // Clear the form fields after adding the activity
       setTitle("");
       setDescription("");
-      window.location.assign('/');
+      window.location.assign("/");
     } catch (err) {
       console.error("Error adding activity:", err);
       console.log(err.response);
@@ -57,7 +57,7 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className='calendar-page'>
+    <div className="calendar-page">
       <h3>
         {" "}
         It's currently... {todayDate} {time}
@@ -94,7 +94,11 @@ const MyCalendar = () => {
             required
           />
         </div>
-        <button type="button" className='activity-button' onClick={handleAddActivity}>
+        <button
+          type="button"
+          className="activity-button"
+          onClick={handleAddActivity}
+        >
           Add Activity
         </button>
       </div>
